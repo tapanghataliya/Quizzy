@@ -92,10 +92,10 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizeViewModel>() {
         }
 
         quizAdapter.setItemClick(object : QuizAdapter.OnItemClickListener {
-            override fun onClick(text: String, total: Int, categorys: String) {
-                totalCorrectAns = text
-                totalQuestions = total
-                category = categorys
+            override fun onClick(correctAns: String, totalQue: Int, categorysType: String) {
+                totalCorrectAns = correctAns
+                totalQuestions = totalQue
+                category = categorysType
             }
         })
     }

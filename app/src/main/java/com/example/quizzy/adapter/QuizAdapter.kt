@@ -2,6 +2,7 @@ package com.example.quizzy.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.VibrationEffect
@@ -28,8 +29,7 @@ class QuizAdapter(
     private val settingsViewModel: SettingsViewModel
 ) : RecyclerView.Adapter<QuizAdapter.ViewPagerHolder>() {
 
-    private var addAnsList = mutableListOf<String>()
-//    var isButtonClicked = false
+    val answerSet = HashSet<String>()
     var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
 
@@ -93,84 +93,61 @@ class QuizAdapter(
         holder.view.txtAttempt.text =
             queNumber.toString() + " / " + differ.currentList.size.toString()
 
-        val myHashSet = HashSet<String>()
-        myHashSet.clear()
-        myHashSet.add(quize.correct_answer!!)
-        myHashSet.addAll(quize.incorrect_answers!!)
-        Log.d("myHashSet", myHashSet.toString())
 
-        for (i in 0 until myHashSet.size){
+        answerSet.clear()
+        answerSet.add(quize.correct_answer!!)
+        answerSet.addAll(quize.incorrect_answers!!)
+        for (i in 0 until answerSet.size) {
 
             val subLayout = LayoutInflater.from(holder.itemView.context)
                 .inflate(R.layout.custom_items_answer, holder.view.lylCustomTextview, false)
             val textAnswer = subLayout.findViewById<TextView>(R.id.txtAns)
-            val data = myHashSet.elementAt(i)
+            val data = answerSet.elementAt(i)
             textAnswer.text = data
             holder.view.lylCustomTextview.addView(subLayout)
+            val quizAnswer = textAnswer.text.toString()
+            textAnswer.setOnClickListener {
+                getAnswerAction(quizAnswer, textAnswer, quize)
+            }
         }
 
-//        addAnsList.clear()
-//        addAnsList.add(quize.correct_answer!!)
-//        for (i in quize.incorrect_answers!!) {
-//            addAnsList.add(i)
-//        }
-//        addAnsList.shuffle()
-
-//        for (i in 0 until addAnsList.size) {
-//            // Add new views dynamically here
-//            // Programmatically inflate the sub-layout
-//            val subLayout = LayoutInflater.from(holder.itemView.context)
-//                .inflate(R.layout.custom_items_answer, holder.view.lylCustomTextview, false)
-//            val textAnswer = subLayout.findViewById<TextView>(R.id.txtAns)
-//            textAnswer.text = addAnsList[i]
-//            holder.view.lylCustomTextview.addView(subLayout)
-//
-//            textAnswer.setOnClickListener {
-//                if (settingsViewModel.getIsChecked()){
-//                    val quizAnswer = textAnswer.text.toString()
-//                    if (quize.correct_answer == quizAnswer) {
-//                        textAnswer.setBackgroundResource(R.color.green)
-//                        textAnswer.setTextColor(Color.WHITE)
-//                        val totalCorrectAns = clickCount++
-//                        Log.d("CorrectAns", totalCorrectAns.toString())
-//                        clickInterface?.onClick(totalCorrectAns.toString(), differ.currentList.size,
-//                            quize.category!!
-//                        )
-//                    } else {
-//                        textAnswer.setBackgroundResource(R.color.white)
-//                        quizeViewModel.onIncorrectAnswerSelected()
-//                        quizeViewModel.vibrationDurations.value = 50
-//                        clickInterface?.onClick("0", differ.currentList.size,quize.category!!)
-//                    }
-//                }else{
-//                    val quizAnswer = textAnswer.text.toString()
-//                    if (quize.correct_answer == quizAnswer) {
-//                        textAnswer.setBackgroundResource(R.color.green)
-//                        textAnswer.setTextColor(Color.WHITE)
-//                        val totalCorrectAns = clickCount++
-//                        clickInterface?.onClick(totalCorrectAns.toString(), differ.currentList.size,quize.category!!)
-//                    } else {
-//                        textAnswer.setBackgroundResource(R.color.white)
-//                        clickInterface?.onClick("0", differ.currentList.size,quize.category!!)
-//                    }
-//                }
-//
-//            }
-//
-////            if (!isButtonClicked){
-////                isButtonClicked = true
-////                val data = textAnswer.text.toString()
-////                if (quize.correct_answer == data){
-////                    textAnswer.setBackgroundResource(R.color.green)
-////                    textAnswer.setTextColor(Color.WHITE)
-////                }else{
-////                    textAnswer.setBackgroundResource(R.color.red)
-////                    textAnswer.setTextColor(Color.WHITE)
-////                }
-////            }
-//
-//        }
     }
+
+    //Answer click get correct answer perform action
+    private fun getAnswerAction(quizAnswer: String, textAnswer: TextView?, quize: Results?) {
+        if (settingsViewModel.getIsChecked()) {
+            if (quize?.correct_answer == quizAnswer) {
+                textAnswer!!.setBackgroundResource(R.color.green)
+                textAnswer.setTextColor(Color.WHITE)
+                val totalCorrectAns = clickCount++
+                clickInterface?.onClick(
+                    totalCorrectAns.toString(),
+                    differ.currentList.size,
+                    quize.category!!
+                )
+            } else {
+                textAnswer!!.setBackgroundResource(R.color.white)
+                quizeViewModel.onIncorrectAnswerSelected()
+                quizeViewModel.vibrationDurations.value = 50
+                clickInterface?.onClick("0", differ.currentList.size, quize?.category!!)
+            }
+        } else {
+            if (quize?.correct_answer == quizAnswer) {
+                textAnswer!!.setBackgroundResource(R.color.green)
+                textAnswer.setTextColor(Color.WHITE)
+                val totalCorrectAns = clickCount++
+                clickInterface?.onClick(
+                    totalCorrectAns.toString(),
+                    differ.currentList.size,
+                    quize.category!!
+                )
+            } else {
+                textAnswer!!.setBackgroundResource(R.color.white)
+                clickInterface?.onClick("0", differ.currentList.size, quize?.category!!)
+            }
+        }
+    }
+
     fun setItemClick(clickInterface: OnItemClickListener) {
         this.clickInterface = clickInterface
     }
@@ -183,6 +160,6 @@ class QuizAdapter(
 
 
     interface OnItemClickListener {
-        fun onClick(text: String, totalQue: Int, category:String)
+        fun onClick(text: String, totalQue: Int, category: String)
     }
 }
