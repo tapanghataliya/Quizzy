@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.quizzy.BR
@@ -19,6 +20,7 @@ import com.example.quizzy.utils.Constant.Companion.categorys
 import com.example.quizzy.utils.Constant.Companion.ok
 import com.example.quizzy.utils.Constant.Companion.result
 import com.example.quizzy.utils.Constant.Companion.resultMsg
+import com.example.quizzy.utils.Constant.Companion.saveTimes
 import com.example.quizzy.utils.Constant.Companion.showPopup
 import com.example.quizzy.utils.Constant.Companion.showSnackBar
 import com.example.quizzy.utils.Constant.Companion.totalCorrectAnswer
@@ -103,32 +105,40 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizeViewModel>() {
     //Display reverse 30 second timer
     @SuppressLint("SetTextI18n")
     private fun setTimer() {
-        viewModel.remainingTime.observe(viewLifecycleOwner) { remainingTime ->
-            getBindingClass().txtTimer.text = "$remainingTime Sec"
-        }
-        viewModel.startTimer(30000)
+//        viewModel.remainingTime.observe(viewLifecycleOwner) { remainingTime ->
+//            getBindingClass().txtTimer.text = "$remainingTime Sec"
+//        }
+//        viewModel.startTimer(30000)
+
+        viewModel.currentTime.observe(viewLifecycleOwner, Observer { timeLeft ->
+
+            getBindingClass().txtTimer.text = timeLeft
+
+        })
+        viewModel.startTimer()
     }
 
     //Cancel timer
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.cancelTimer()
+//        viewModel.cancelTimer()
     }
 
     //Handle click for next question display
     private fun clickHandle() {
         getBindingClass().imgNext.setOnClickListener {
             nextDataShow()
-            setTimer()
         }
 
         getBindingClass().lylSubmit.setOnClickListener {
             viewModel.cancelTimer()
+            val saveTime = getBindingClass().txtTimer.text
             view?.showPopup(result, resultMsg, ok, cancel, {
                 val bundle = Bundle()
                 bundle.putString(totalCorrectAnswer, totalCorrectAns)
                 bundle.putInt(totalQuestion, totalQuestions)
                 bundle.putString(categorys, category)
+                bundle.putString(saveTimes, saveTime.toString())
                 findNavController().navigate(R.id.resultFragment, bundle)
             }, {
                 view?.showSnackBar("Cancel")

@@ -15,6 +15,7 @@ import com.example.quizzy.databinding.FragmentSettingsBinding
 import com.example.quizzy.ui.quiz.QuizeViewModel
 import com.example.quizzy.ui.settings.SettingsViewModel
 import com.example.quizzy.utils.Constant.Companion.categorys
+import com.example.quizzy.utils.Constant.Companion.saveTimes
 import com.example.quizzy.utils.Constant.Companion.totalCorrectAnswer
 import com.example.quizzy.utils.Constant.Companion.totalQuestion
 
@@ -23,6 +24,7 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
     var totalQuestions: Int = 0
     private lateinit var totalCorrectAns: String
     private lateinit var categoryType: String
+    private lateinit var saveTime: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +38,12 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
             totalQuestions = arguments.getInt(totalQuestion)
             totalCorrectAns = arguments.getString(totalCorrectAnswer).toString()
             categoryType = arguments.getString(categorys).toString()
+            saveTime = arguments.getString(saveTimes).toString()
 
             getBindingClass().txtScored.text = totalCorrectAns
             getBindingClass().txtTotalQue.text = totalQuestions.toString()
             getBindingClass().txtQuizType.text = categoryType
+            getBindingClass().txtTakenTime.text = saveTime + "min"
         }
 
         clickHandle()

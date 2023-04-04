@@ -14,6 +14,8 @@
     <string name="error">Something went wrong</string>
     <string name="select_item">select item</string>
     <string name="Scored">Scored : </string>
+    <string name="Time">Time : </string>
+    <string name="TimeTaken">Time taken : </string>
     <string name="QuizName">Quiz name : </string>
     <string name="TimeSpent">Time spent : </string>
     <string name="TotalQue">Total question : </string>

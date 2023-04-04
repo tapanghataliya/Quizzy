@@ -27,6 +27,7 @@ class Constant {
         const val totalCorrectAnswer = "totalCorrectAns"
         const val totalQuestion = "totalQuestions"
         const val categorys = "category"
+        const val saveTimes = "saveTime"
 
         fun View.showSnackBar(message: String?) {
             Snackbar.make(this, message ?: "", Snackbar.LENGTH_SHORT).show()

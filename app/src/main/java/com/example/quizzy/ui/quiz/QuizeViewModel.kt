@@ -11,12 +11,44 @@ import com.example.quizzy.data.quiz.QuestionList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizeViewModel @Inject constructor(
     private val quizRepository: QuizRepository
 ) : BaseViewModel<BaseNavigator>() {
+
+    private val _currentTime = MutableLiveData<String>()
+    val currentTime: LiveData<String>
+        get() = _currentTime
+
+    private var timer: Timer? = null
+    private var remainingTimes = 0
+
+    fun startTimer() {
+        timer?.cancel()
+        timer = Timer()
+
+        timer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                remainingTimes--
+                val minutes = remainingTimes / 60
+                val seconds = remainingTimes % 60
+                _currentTime.postValue("%02d:%02d".format(minutes, seconds))
+                if (remainingTimes <= 0) {
+                    timer?.cancel()
+                }
+            }
+        }, 0, 1000)
+
+        remainingTimes = 20 * 60
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        timer?.cancel()
+    }
 
     val quizList = MutableLiveData<QuestionList>()
     private var quizResponse: QuestionList? = null
