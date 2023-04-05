@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.quizzy.ui.home.HomeFragment"
-        android:label="HomeFragment"
+        android:name="com.example.quizzy.features.home.HomeFragment"
+        android:label="Quizzy Time"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_quizeFragment2"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/quizeFragment2"
-        android:name="com.example.quizzy.ui.quiz.QuizeFragment"
+        android:name="com.example.quizzy.features.quiz.ui.QuizeFragment"
         android:label="Question" >
         <action
             android:id="@+id/action_quizeFragment2_to_homeFragment"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.quizzy.ui.settings.SettingsFragment"
+        android:name="com.example.quizzy.features.settings.ui.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -39,11 +39,11 @@
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
-        android:name="com.example.quizzy.ui.result.ResultFragment"
+        android:name="com.example.quizzy.features.result.ResultFragment"
         android:label="Result"
         tools:layout="@layout/fragment_result" />
     <fragment
         android:id="@+id/solutionFragment"
-        android:name="com.example.quizzy.ui.solution.SolutionFragment"
+        android:name="com.example.quizzy.features.solution.ui.SolutionFragment"
         android:label="Solution" />
 </navigation>

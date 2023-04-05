@@ -19,7 +19,7 @@
         android:theme="@style/Theme.Quizzy"
         tools:targetApi="31">
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".features.splash.ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.RemoveSplashScreenTheme">
             <intent-filter>
@@ -33,7 +33,7 @@
 <!--                android:value="" />-->
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".features.MainActivity"
             android:exported="true" />
     </application>
 

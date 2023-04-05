@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.quizzy.ui.quiz.QuizeViewModel" />
+            type="com.example.quizzy.features.quiz.ui.QuizViewModel" />
     </data>
 
     <RelativeLayout
