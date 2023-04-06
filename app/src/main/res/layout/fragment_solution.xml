@@ -31,12 +31,13 @@
             android:background="@drawable/shap_top"
             android:gravity="center"
             android:orientation="horizontal"
+            android:baselineAligned="false"
             android:layout_alignParentBottom="true">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dimen_15dp"
+                android:layout_marginEnd="@dimen/dimen_15dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -46,6 +47,7 @@
                     android:layout_width="@dimen/dimen_60dp"
                     android:layout_height="@dimen/dimen_60dp"
                     android:padding="@dimen/dimen_10dp"
+                    android:contentDescription="@string/next"
                     android:src="@drawable/ic_baseline_arrow_circle_right_24" />
 
             </LinearLayout>

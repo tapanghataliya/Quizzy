@@ -2,10 +2,11 @@ package com.example.quizzy.core.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.quizzy.core.apiservices.ApiService
-import com.example.quizzy.core.utils.Constant.Companion.BaseURL
+import android.net.ConnectivityManager
 import com.example.quizzy.core.apiservices.ApiHelper
 import com.example.quizzy.core.apiservices.ApiHelperImpl
+import com.example.quizzy.core.apiservices.ApiService
+import com.example.quizzy.core.utils.Constant.Companion.BaseURL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,6 +46,11 @@ class AppModule {
     @Provides
     @Singleton
     fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
+    @Provides
+    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager {
+        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 
     @Provides
     @Singleton

@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_margin="@dimen/dimen_20sp"
             android:orientation="vertical">
@@ -31,10 +31,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/yellow"
                     android:orientation="horizontal"
+                    android:baselineAligned="false"
                     android:padding="@dimen/dimen_10dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -82,10 +83,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/yellow"
                     android:orientation="horizontal"
+                    android:baselineAligned="false"
                     android:padding="@dimen/dimen_10dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -109,7 +111,7 @@
                             android:id="@+id/txtTotalTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20:00 min"
+                            android:text="@string/displayTime"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimen_20sp"
                             android:textStyle="bold" />
@@ -132,10 +134,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/yellow"
                     android:orientation="horizontal"
+                    android:baselineAligned="false"
                     android:padding="@dimen/dimen_10dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -181,10 +184,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/yellow"
                     android:orientation="horizontal"
+                    android:baselineAligned="false"
                     android:padding="@dimen/dimen_10dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -230,10 +234,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/yellow"
                     android:orientation="horizontal"
+                    android:baselineAligned="false"
                     android:padding="@dimen/dimen_10dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">

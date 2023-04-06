@@ -1,24 +1,29 @@
 package com.example.quizzy.features.quiz.ui
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
+import com.example.quizzy.core.utils.NetworkUtils
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.core.utils.VibrationUtils
 import com.example.quizzy.features.quiz.data.QuestionList
 import com.example.quizzy.features.quiz.domain.QuestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    private val questionRepository: QuestionRepository
+    private val questionRepository: QuestionRepository,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel<BaseNavigator>() {
 
     private val _questionRes = MutableLiveData<Resource<QuestionList>>()
@@ -39,6 +44,10 @@ class QuizViewModel @Inject constructor(
     private val _incorrectAnswerSound = MutableLiveData<Int>()
     val incorrectAnswerSound: LiveData<Int>
         get() = _incorrectAnswerSound
+
+    private val _isConnected = MutableLiveData<Boolean>()
+    val isConnected: LiveData<Boolean>
+        get() = _isConnected
 
     //Given list of questions
     fun getQuestionList(nQuestion: String, catID: String, diffType: String, queType: String) =
@@ -92,7 +101,14 @@ class QuizViewModel @Inject constructor(
         timer?.cancel()
     }
 
+    //vibrate click event
     fun onClickVibrat(context: Context) {
         VibrationUtils.vibrate(context)
+    }
+
+    //Check Internet connection
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun checkInternetConnection(context: Context) {
+        _isConnected.value = NetworkUtils.isNetworkConnected(context)
     }
 }

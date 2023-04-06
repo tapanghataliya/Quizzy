@@ -3,6 +3,8 @@ package com.example.quizzy.core.utils
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -11,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -18,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.quizzy.R
 import com.example.quizzy.databinding.QuizPopupBinding
 import com.google.android.material.snackbar.Snackbar
+import okio.IOException
 
 class Constant {
 
@@ -38,6 +42,7 @@ class Constant {
         const val saveTimes = "saveTime"
         const val displayTimer = "DisplayTImer"
         const val selectAnswer = "Please select answer"
+        const val noInternet = "No internet connection"
 
         private var dialog: Dialog? = null
 
@@ -45,6 +50,15 @@ class Constant {
             Snackbar.make(this, message ?: "", Snackbar.LENGTH_SHORT).show()
             val snackbar = Snackbar.make(this, message.toString(), Snackbar.LENGTH_LONG)
             snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+            val snackbarText = snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            snackbarText.setTextColor(ContextCompat.getColor(context, R.color.white))
+            snackbar.show()
+        }
+
+        fun View.showSnackRedBar(message: String?) {
+            Snackbar.make(this, message ?: "", Snackbar.LENGTH_LONG).show()
+            val snackbar = Snackbar.make(this, message.toString(), Snackbar.LENGTH_LONG)
+            snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
             val snackbarText = snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
             snackbarText.setTextColor(ContextCompat.getColor(context, R.color.white))
             snackbar.show()
@@ -86,15 +100,6 @@ class Constant {
                 )
                 show()
             }
-        }
-    }
-
-    fun vibrate(context: Context) {
-        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(100)
         }
     }
 

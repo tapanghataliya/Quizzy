@@ -1,7 +1,9 @@
 package com.example.quizzy.features.quiz.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -9,9 +11,11 @@ import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
 import com.example.quizzy.core.utils.Constant.Companion.SETTIMER
+import com.example.quizzy.core.utils.Constant.Companion.noInternet
 import com.example.quizzy.core.utils.Constant.Companion.selectAnswer
 import com.example.quizzy.core.utils.Constant.Companion.showDialog
 import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
+import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
 import com.example.quizzy.core.utils.Status
 import com.example.quizzy.databinding.FragmentQuizeBinding
 import com.example.quizzy.features.settings.ui.SettingsViewModel
@@ -43,6 +47,7 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
         viewModel = ViewModelProvider(this)[QuizViewModel::class.java]
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -63,7 +68,18 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
         questionsType = settingsViewModel.getQuestionssType().toString()
         isChecked = settingsViewModel.getIsChecked().toString()
 
-        quizQuestionList()
+        context?.let { viewModel.checkInternetConnection(it) }
+        viewModel.isConnected.observe(viewLifecycleOwner, Observer { isConnected->
+            if (isConnected){
+                getBindingClass().rlQuiz.visibility = View.VISIBLE
+                getBindingClass().imgNoInternet.visibility = View.GONE
+                quizQuestionList()
+            }else{
+                view.showSnackRedBar(noInternet)
+                getBindingClass().rlQuiz.visibility = View.GONE
+                getBindingClass().imgNoInternet.visibility = View.VISIBLE
+            }
+        })
         clickHandle()
     }
 
@@ -113,9 +129,9 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
         }
 
         quizAdapter.setItemClick(object : QuizAdapter.OnItemClickListener {
-            override fun onClick(correctAns: String, totalQue: Int, categorysType: String) {
+            override fun onClick(text: String, totalQue: Int, categorysType: String) {
                 isClick = true
-                totalCorrectAns = correctAns
+                totalCorrectAns = text
                 totalQuestions = totalQue
                 category = categorysType
             }

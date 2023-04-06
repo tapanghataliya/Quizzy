@@ -1,6 +1,9 @@
 package com.example.quizzy.features.settings.ui
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,6 +14,7 @@ import com.example.quizzy.core.utils.Constant.Companion.difficultySType
 import com.example.quizzy.core.utils.Constant.Companion.isChecked
 import com.example.quizzy.core.utils.Constant.Companion.numberOfQue
 import com.example.quizzy.core.utils.Constant.Companion.questionSType
+import com.example.quizzy.core.utils.NetworkUtils
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.settings.data.CategoryListResponse
 import com.example.quizzy.features.settings.data.TriviaCategory
@@ -32,6 +36,10 @@ class SettingsViewModel @Inject constructor(
     private val _categoryRes = MutableLiveData<Resource<CategoryListResponse>>()
     val categorysResponse: LiveData<Resource<CategoryListResponse>>
         get() = _categoryRes
+
+    private val _isConnected = MutableLiveData<Boolean>()
+    val isConnected: LiveData<Boolean>
+        get() = _isConnected
 
     //Get Category list from server
     fun getCategory() =
@@ -92,4 +100,9 @@ class SettingsViewModel @Inject constructor(
     fun getQuestionssType() = sharedPreferences.getString(questionSType, null)
     fun getIsChecked() = sharedPreferences.getBoolean(isChecked,false)
 
+    //Check Internet connection
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun checkInternetConnection(context: Context) {
+        _isConnected.value = NetworkUtils.isNetworkConnected(context)
+    }
 }
