@@ -17,7 +17,7 @@ import com.example.quizzy.databinding.FragmentResultBinding
 
 class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
 
-    private var totalQuestions: Int = 0
+    private lateinit var totalQuestions: String
     private lateinit var totalCorrectAns: String
     private lateinit var categoryType: String
     private lateinit var saveTime: String
@@ -33,19 +33,18 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         val arguments = arguments
         if (arguments != null){
-            totalQuestions = arguments.getInt(totalQuestion)
+            totalQuestions = arguments.getString(totalQuestion).toString()
             totalCorrectAns = arguments.getString(totalCorrectAnswer).toString()
             categoryType = arguments.getString(categorys).toString()
             saveTime = arguments.getString(saveTimes).toString()
             timeSET = arguments.getString(displayTimer).toString()
-
             if (timeSET == "null"){
                 getBindingClass().cardTime.visibility = View.GONE
                 getBindingClass().cardTimeTaken.visibility = View.GONE
             }
 
             getBindingClass().txtScored.text = totalCorrectAns
-            getBindingClass().txtTotalQue.text = totalQuestions.toString()
+            getBindingClass().txtTotalQue.text = totalQuestions
             getBindingClass().txtQuizType.text = categoryType
             getBindingClass().txtTakenTime.text = saveTime + "min"
         }
@@ -54,7 +53,6 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
     }
 
     private fun clickHandle() {
-        getBindingClass().txtRefresh.setOnClickListener {  }
         getBindingClass().txtSolution.setOnClickListener {
             findNavController().navigate(R.id.solutionFragment)
         }

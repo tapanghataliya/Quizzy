@@ -90,6 +90,6 @@ class SettingsViewModel @Inject constructor(
     fun getCategorysID() = sharedPreferences.getString(categorysId, null)
     fun getDifficultysType() = sharedPreferences.getString(difficultySType, null)
     fun getQuestionssType() = sharedPreferences.getString(questionSType, null)
-    fun getIsChecked() = sharedPreferences.getBoolean(isChecked,true)
+    fun getIsChecked() = sharedPreferences.getBoolean(isChecked,false)
 
 }

@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.media.MediaPlayer
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,15 +17,15 @@ import com.example.quizzy.features.settings.ui.SettingsViewModel
 import java.util.*
 
 
-@Suppress("UNREACHABLE_CODE")
+@Suppress("UNREACHABLE_CODE", "DEPRECATION")
 class QuizAdapter(
     private val quizeViewModel: QuizViewModel,
     private val context: Context,
     private val settingsViewModel: SettingsViewModel
 ) : RecyclerView.Adapter<QuizAdapter.ViewPagerHolder>() {
 
-    val answerSet = HashSet<String>()
-    var clickCount = 1
+    private val answerSet = HashSet<String>()
+    private var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
 
     init {
@@ -36,22 +33,6 @@ class QuizAdapter(
             it?.let { sound ->
                 val mediaPlayer = MediaPlayer.create(context, sound)
                 mediaPlayer.start()
-            }
-        }
-
-        quizeViewModel.vibrationDuration.observeForever {
-            it?.let { duration ->
-                val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(
-                        VibrationEffect.createOneShot(
-                            duration,
-                            VibrationEffect.DEFAULT_AMPLITUDE
-                        )
-                    )
-                } else {
-                    vibrator.vibrate(duration)
-                }
             }
         }
     }
@@ -126,7 +107,7 @@ class QuizAdapter(
             } else {
                 textAnswer!!.setBackgroundResource(R.color.white)
                 quizeViewModel.onIncorrectAnswerSelected()
-                quizeViewModel.vibrationDurations.value = 50
+                quizeViewModel.onClickVibrat(context)
                 clickInterface?.onClick("0", differ.currentList.size, quize?.category!!)
             }
         } else {

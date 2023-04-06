@@ -1,6 +1,6 @@
 package com.example.quizzy.features.quiz.ui
 
-import android.os.CountDownTimer
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,6 +8,7 @@ import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
 import com.example.quizzy.core.utils.Resource
+import com.example.quizzy.core.utils.VibrationUtils
 import com.example.quizzy.features.quiz.data.QuestionList
 import com.example.quizzy.features.quiz.domain.QuestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,15 +36,9 @@ class QuizViewModel @Inject constructor(
     val currentPosition: LiveData<Int>
         get() = _currentPosition
 
-//    private var countDownTimer: CountDownTimer? = null
-
     private val _incorrectAnswerSound = MutableLiveData<Int>()
     val incorrectAnswerSound: LiveData<Int>
         get() = _incorrectAnswerSound
-
-    val vibrationDurations = MutableLiveData<Long>()
-    val vibrationDuration: LiveData<Long>
-        get() = vibrationDurations
 
     //Given list of questions
     fun getQuestionList(nQuestion: String, catID: String, diffType: String, queType: String) =
@@ -67,11 +62,6 @@ class QuizViewModel @Inject constructor(
     fun onButtonClicked() {
         _currentPosition.value = (_currentPosition.value ?: 0) + 1
     }
-
-    //Cancel timer
-//    fun cancelTimer() {
-//        countDownTimer?.cancel()
-//    }
 
     //Incorrect answer sound
     fun onIncorrectAnswerSelected() {
@@ -100,5 +90,9 @@ class QuizViewModel @Inject constructor(
 
     fun cancelTimer() {
         timer?.cancel()
+    }
+
+    fun onClickVibrat(context: Context) {
+        VibrationUtils.vibrate(context)
     }
 }

@@ -80,7 +80,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : Fragme
     /**
      * Hide soft keyboard
      */
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         baseActivity?.hideKeyboard()
     }
 

@@ -4,7 +4,6 @@
     <data></data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dimen_20sp"
@@ -12,7 +11,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -31,6 +30,7 @@
                 android:layout_height="@dimen/dimen_200sp"
                 android:layout_gravity="center"
                 android:padding="@dimen/dimen_20sp"
+                android:contentDescription="@string/splashLogo"
                 android:src="@drawable/splash_logo" />
 
             <View
@@ -47,10 +47,11 @@
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:orientation="horizontal"
+                android:baselineAligned="false"
                 android:padding="@dimen/dimen_10dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -74,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:text="Film"
+                        android:text=""
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_20sp" />
                 </LinearLayout>
@@ -88,10 +89,11 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
+                android:baselineAligned="false"
                 android:padding="@dimen/dimen_10dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -114,7 +116,7 @@
                         android:id="@+id/txtTotalTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20:00 min"
+                        android:text="@string/displayTime"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_20sp" />
                 </LinearLayout>
@@ -127,10 +129,11 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
+                android:baselineAligned="false"
                 android:padding="@dimen/dimen_10dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -153,7 +156,7 @@
                         android:id="@+id/txtTakenTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10:00 min"
+                        android:text="@string/displayTime"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_20sp" />
                 </LinearLayout>
@@ -166,10 +169,11 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
+                android:baselineAligned="false"
                 android:padding="@dimen/dimen_10dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -192,7 +196,7 @@
                         android:id="@+id/txtScored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4"
+                        android:text="@string/totalQue"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_20sp" />
                 </LinearLayout>
@@ -205,10 +209,11 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
+                android:baselineAligned="false"
                 android:padding="@dimen/dimen_10dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -231,7 +236,7 @@
                         android:id="@+id/txtTotalQue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10"
+                        android:text="@string/totalQue"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_20sp" />
                 </LinearLayout>

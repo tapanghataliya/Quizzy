@@ -43,6 +43,7 @@ class SolutionAdapter : RecyclerView.Adapter<SolutionAdapter.ViewPagerHolder>() 
     private val differ = AsyncListDiffer(this, differCallback)
     fun questionList(list: List<Results>) = differ.submitList(list)
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewPagerHolder, position: Int) {
         val quize = differ.currentList[position]
         holder.view.txtQuestion.text = quize.question

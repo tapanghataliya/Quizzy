@@ -1,28 +1,17 @@
 package com.example.quizzy.features.quiz.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
 import com.example.quizzy.core.utils.Constant.Companion.SETTIMER
-import com.example.quizzy.core.utils.Constant.Companion.cancel
-import com.example.quizzy.core.utils.Constant.Companion.categorys
-import com.example.quizzy.core.utils.Constant.Companion.displayTimer
-import com.example.quizzy.core.utils.Constant.Companion.ok
-import com.example.quizzy.core.utils.Constant.Companion.result
-import com.example.quizzy.core.utils.Constant.Companion.resultMsg
-import com.example.quizzy.core.utils.Constant.Companion.saveTimes
+import com.example.quizzy.core.utils.Constant.Companion.selectAnswer
 import com.example.quizzy.core.utils.Constant.Companion.showDialog
-import com.example.quizzy.core.utils.Constant.Companion.showPopup
 import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
-import com.example.quizzy.core.utils.Constant.Companion.totalCorrectAnswer
-import com.example.quizzy.core.utils.Constant.Companion.totalQuestion
 import com.example.quizzy.core.utils.Status
 import com.example.quizzy.databinding.FragmentQuizeBinding
 import com.example.quizzy.features.settings.ui.SettingsViewModel
@@ -47,6 +36,7 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
     private lateinit var difficultyType: String
     private lateinit var questionsType: String
     private lateinit var isChecked: String
+    var isClick :Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +114,7 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
 
         quizAdapter.setItemClick(object : QuizAdapter.OnItemClickListener {
             override fun onClick(correctAns: String, totalQue: Int, categorysType: String) {
+                isClick = true
                 totalCorrectAns = correctAns
                 totalQuestions = totalQue
                 category = categorysType
@@ -154,21 +145,17 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
         }
 
         getBindingClass().lylSubmit.setOnClickListener {
-            viewModel.cancelTimer()
-            val saveTime = getBindingClass().txtTimer.text
-            Log.d("saveTime", saveTime.toString())
-//            view?.showDialog(totalCorrectAns, totalQuestion, category, saveTime.toString(), timeSET)
-            view?.showPopup(result, resultMsg, ok, cancel, {
-                val bundle = Bundle()
-                bundle.putString(totalCorrectAnswer, totalCorrectAns)
-                bundle.putInt(totalQuestion, totalQuestions)
-                bundle.putString(categorys, category)
-                bundle.putString(saveTimes, saveTime.toString())
-                bundle.putString(displayTimer, timeSET)
-                findNavController().navigate(R.id.resultFragment, bundle)
-            }, {
-                view?.showSnackBar("Cancel")
-            })
+            if (!isClick){
+                view?.showSnackBar(selectAnswer)
+            }else{
+                viewModel.cancelTimer()
+                val saveTime = getBindingClass().txtTimer.text
+                if (nQuestion == "null"){
+                    view?.showDialog(totalCorrectAns, "10", category, saveTime.toString(), timeSET)
+                }else{
+                    view?.showDialog(totalCorrectAns, nQuestion, category, saveTime.toString(), timeSET)
+                }
+            }
         }
     }
 

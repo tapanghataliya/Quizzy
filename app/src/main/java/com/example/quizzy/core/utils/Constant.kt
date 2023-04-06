@@ -2,12 +2,19 @@ package com.example.quizzy.core.utils
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
+import android.os.Build
+import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.quizzy.R
 import com.example.quizzy.databinding.QuizPopupBinding
 import com.google.android.material.snackbar.Snackbar
@@ -24,16 +31,13 @@ class Constant {
         const val categorysId = "categoryID"
         const val difficultySType = "difficultyType"
         const val questionSType = "questionsType"
-        const val result = "Result"
-        const val resultMsg = "Score updated successfully."
-        const val ok = "Okay"
-        const val cancel = "Cancel"
         const val isChecked = "false"
         const val totalCorrectAnswer = "totalCorrectAns"
         const val totalQuestion = "totalQuestions"
         const val categorys = "category"
         const val saveTimes = "saveTime"
         const val displayTimer = "DisplayTImer"
+        const val selectAnswer = "Please select answer"
 
         private var dialog: Dialog? = null
 
@@ -46,27 +50,11 @@ class Constant {
             snackbar.show()
         }
 
-        fun View.showPopup(title: String, message: String, positiveButton: String,
-                           negativeButton: String, onPositiveClick: () -> Unit,
-                           onNegativeClick: () -> Unit) {
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle(title)
-            builder.setMessage(message)
-            builder.setPositiveButton(positiveButton) { dialog, which ->
-                onPositiveClick.invoke()
-            }
-            builder.setNegativeButton(negativeButton) { dialog, which ->
-                onNegativeClick.invoke()
-            }
-            val dialog = builder.create()
-            dialog.show()
-        }
-
         fun View.showDialog(totalCorrectAns:String,
-                            totalQuestion:String,
+                            totalQuestions:String,
                             categoryType:String,
                             saveTime:String,
-                            timeSET:String){
+                            timeSET:String,){
             val binding = DataBindingUtil.inflate<QuizPopupBinding>(
                 LayoutInflater.from(context),
                 R.layout.quiz_popup,
@@ -75,12 +63,19 @@ class Constant {
             )
             binding.txtCategoryType.text = categoryType
             binding.txtScored.text = totalCorrectAns
-            binding.txtTotalQue.text = totalQuestion
+            binding.txtTotalQue.text = totalQuestions
             binding.txtQuizType.text = categoryType
             binding.txtTakenTime.text = saveTime + "min"
 
             binding.txtStart.setOnClickListener {
-                rootView?.showSnackBar("Click")
+                val bundle = Bundle()
+                bundle.putString(totalCorrectAnswer, totalCorrectAns)
+                bundle.putString(totalQuestion, totalQuestions)
+                bundle.putString(categorys, categoryType)
+                bundle.putString(saveTimes, saveTime)
+                bundle.putString(displayTimer, timeSET)
+                findNavController().navigate(R.id.resultFragment, bundle)
+                dialog?.cancel()
             }
             dialog = Dialog(context).apply {
                 setContentView(binding.root)
@@ -91,6 +86,15 @@ class Constant {
                 )
                 show()
             }
+        }
+    }
+
+    fun vibrate(context: Context) {
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(100)
         }
     }
 

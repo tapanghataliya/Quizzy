@@ -1,6 +1,7 @@
 package com.example.quizzy.features.settings.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * A simple Setting Fragment.
  * In this fragment display category, difficulty, type, sound enable and vibration enable in this screen.
  */
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>() {
 

@@ -10,9 +10,7 @@ abstract class BaseActivity: AppCompatActivity() {
         view?.let { v ->
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager?.let {
-                it.hideSoftInputFromWindow(v.windowToken, 0)
-            }
+            inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
         }
     }
 }
