@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/quizeFragment2"
-        android:name="com.example.quizzy.features.quiz.ui.QuestionFragment"
+        android:name="com.example.quizzy.features.question.ui.QuestionFragment"
         android:label="Question" >
         <action
             android:id="@+id/action_quizeFragment2_to_homeFragment"

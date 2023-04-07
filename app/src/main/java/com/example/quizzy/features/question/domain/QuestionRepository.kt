@@ -1,9 +1,7 @@
-package com.example.quizzy.features.quiz.domain
+package com.example.quizzy.features.question.domain
 
-import android.content.Context
 import com.example.quizzy.core.apiservices.ApiHelper
-import com.example.quizzy.features.quiz.data.QuestionList
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.example.quizzy.features.question.data.QuestionList
 import retrofit2.Response
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.example.quizzy.features.quiz.ui
+package com.example.quizzy.features.question.ui
 
 import android.os.Build
 import android.os.Bundle

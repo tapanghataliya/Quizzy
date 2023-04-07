@@ -1,4 +1,4 @@
-package com.example.quizzy.features.quiz.data
+package com.example.quizzy.features.question.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

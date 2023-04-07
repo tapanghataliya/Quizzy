@@ -186,6 +186,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     private fun buttonClickHandler() {
 
+        getBindingClass().switchSound.isChecked = viewModel.getIsChecked() != false
         getBindingClass().switchSound.setOnCheckedChangeListener{_, isChecked ->
             isCheck = isChecked
             viewModel.getIsChecked()

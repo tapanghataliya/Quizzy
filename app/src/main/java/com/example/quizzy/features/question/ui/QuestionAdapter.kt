@@ -1,4 +1,4 @@
-package com.example.quizzy.features.quiz.ui
+package com.example.quizzy.features.question.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizzy.R
 import com.example.quizzy.databinding.ItemsQuizBinding
-import com.example.quizzy.features.quiz.data.Results
+import com.example.quizzy.features.question.data.Results
 import com.example.quizzy.features.settings.ui.SettingsViewModel
 import java.util.*
 

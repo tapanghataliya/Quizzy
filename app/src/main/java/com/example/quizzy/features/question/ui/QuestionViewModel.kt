@@ -1,4 +1,4 @@
-package com.example.quizzy.features.quiz.ui
+package com.example.quizzy.features.question.ui
 
 import android.content.Context
 import android.os.Build
@@ -12,8 +12,8 @@ import com.example.quizzy.core.base.BaseViewModel
 import com.example.quizzy.core.utils.NetworkUtils
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.core.utils.VibrationUtils
-import com.example.quizzy.features.quiz.data.QuestionList
-import com.example.quizzy.features.quiz.domain.QuestionRepository
+import com.example.quizzy.features.question.data.QuestionList
+import com.example.quizzy.features.question.domain.QuestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch

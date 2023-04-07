@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizzy.R
 import com.example.quizzy.databinding.ItemsQuizBinding
-import com.example.quizzy.features.quiz.data.Results
+import com.example.quizzy.features.question.data.Results
 import java.util.HashSet
 
 class SolutionAdapter : RecyclerView.Adapter<SolutionAdapter.ViewPagerHolder>() {

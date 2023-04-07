@@ -1,7 +1,7 @@
 package com.example.quizzy.features.solution.domain
 
 import com.example.quizzy.core.apiservices.ApiHelper
-import com.example.quizzy.features.quiz.data.QuestionList
+import com.example.quizzy.features.question.data.QuestionList
 import retrofit2.Response
 import javax.inject.Inject
 

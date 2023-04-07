@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
 import com.example.quizzy.core.utils.Resource
-import com.example.quizzy.features.quiz.data.QuestionList
+import com.example.quizzy.features.question.data.QuestionList
 import com.example.quizzy.features.solution.domain.SolutionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.quizzy.features.quiz.data
+package com.example.quizzy.features.question.data
 
 data class QuestionList(
     val response_code: Int,
