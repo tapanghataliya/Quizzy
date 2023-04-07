@@ -3,6 +3,7 @@ package com.example.quizzy.features.solution.ui
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -11,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quizzy.R
 import com.example.quizzy.databinding.ItemsQuizBinding
 import com.example.quizzy.features.quiz.data.Results
+import java.util.HashSet
 
 class SolutionAdapter : RecyclerView.Adapter<SolutionAdapter.ViewPagerHolder>() {
 
-    private var addAnsList = mutableListOf<String>()
-
+    private val answerSet = HashSet<String>()
+    lateinit var subLayout: View
     class ViewPagerHolder(val view: ItemsQuizBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerHolder {
@@ -53,22 +55,19 @@ class SolutionAdapter : RecyclerView.Adapter<SolutionAdapter.ViewPagerHolder>() 
         holder.view.txtAttempt.text =
             queNumber.toString() + " / " + differ.currentList.size.toString()
 
-        addAnsList.clear()
-        addAnsList.add(quize.correct_answer!!)
-        for (i in quize.incorrect_answers!!) {
-            addAnsList.add(i)
-        }
-        addAnsList.shuffle()
+        answerSet.clear()
+        answerSet.add(quize.correct_answer!!)
+        answerSet.addAll(quize.incorrect_answers!!)
+        holder.view.lylCustomTextview.removeAllViews()
 
-        for (i in 0 until addAnsList.size){
-            // Add new views dynamically here
-            // Programmatically inflate the sub-layout
-            val subLayout = LayoutInflater.from(holder.itemView.context)
+        for (i in 0 until answerSet.size) {
+            subLayout = LayoutInflater.from(holder.itemView.context)
                 .inflate(R.layout.custom_items_answer, holder.view.lylCustomTextview, false)
             val textAnswer = subLayout.findViewById<TextView>(R.id.txtAns)
-            textAnswer.text = addAnsList[i]
-            val quizAnswer = textAnswer.text.toString()
+            val data = answerSet.elementAt(i)
+            textAnswer.text = data
 
+            val quizAnswer = textAnswer.text.toString()
             if (quize.correct_answer == quizAnswer){
                 textAnswer.setBackgroundResource(R.color.green)
                 textAnswer.setTextColor(Color.WHITE)
@@ -76,6 +75,7 @@ class SolutionAdapter : RecyclerView.Adapter<SolutionAdapter.ViewPagerHolder>() 
                 textAnswer.setBackgroundResource(R.color.white)
             }
             holder.view.lylCustomTextview.addView(subLayout)
+
         }
     }
 

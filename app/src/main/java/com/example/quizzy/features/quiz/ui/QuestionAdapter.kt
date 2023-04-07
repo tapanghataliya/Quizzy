@@ -74,10 +74,10 @@ class QuestionAdapter(
         holder.view.txtAttempt.text =
             queNumber.toString() + " / " + differ.currentList.size.toString()
 
-
         answerSet.clear()
         answerSet.add(quize.correct_answer!!)
         answerSet.addAll(quize.incorrect_answers!!)
+        holder.view.lylCustomTextview.removeAllViews()
         for (i in 0 until answerSet.size) {
             subLayout = LayoutInflater.from(holder.itemView.context)
                 .inflate(R.layout.custom_items_answer, holder.view.lylCustomTextview, false)
