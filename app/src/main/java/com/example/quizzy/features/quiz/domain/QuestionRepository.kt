@@ -8,8 +8,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class QuestionRepository @Inject constructor(
-    private val apiHelper: ApiHelper,
-    @ApplicationContext private val context: Context
+    private val apiHelper: ApiHelper
 ) {
     suspend fun getQuestionList(
         nQuestion: String,

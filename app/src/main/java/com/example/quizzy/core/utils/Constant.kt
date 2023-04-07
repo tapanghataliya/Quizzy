@@ -1,27 +1,19 @@
 package com.example.quizzy.core.utils
 
-import android.app.AlertDialog
+import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.quizzy.R
 import com.example.quizzy.databinding.QuizPopupBinding
 import com.google.android.material.snackbar.Snackbar
-import okio.IOException
 
 class Constant {
 
@@ -30,19 +22,21 @@ class Constant {
         const val BaseURL = "https://opentdb.com/"
 
         const val SPLASH_SCREEN_TIMEOUT = 3000L // 3 seconds
-        const val SETTIMER = "time"
-        const val numberOfQue = "numberOfQue"
-        const val categorysId = "categoryID"
-        const val difficultySType = "difficultyType"
-        const val questionSType = "questionsType"
-        const val isChecked = "false"
-        const val totalCorrectAnswer = "totalCorrectAns"
-        const val totalQuestion = "totalQuestions"
-        const val categorys = "category"
-        const val saveTimes = "saveTime"
-        const val displayTimer = "DisplayTImer"
-        const val selectAnswer = "Please select answer"
-        const val noInternet = "No internet connection"
+
+        const val SET_TIMER = "time"
+        const val NUMBER_QUESTION = "numberOfQue"
+        const val CATEGORY_ID = "categoryID"
+        const val DIFFICULTY_TYPE = "difficultyType"
+        const val QUESTIONS_TYPE = "questionsType"
+        const val ISCHECKED = "false"
+        const val TOTAL_CORRECT_ANS = "totalCorrectAns"
+        const val TOTAL_QUESTIONS = "totalQuestions"
+        const val CATEGORYS = "category"
+        const val SAVE_TIMES = "saveTime"
+        const val DISPLAY_TIME = "DisplayTimer"
+        const val SELECT_ANSWER = "Please select answer"
+        const val NO_INTERNET = "No internet connection"
+        const val NO_RECORD = "No Record Found"
 
         private var dialog: Dialog? = null
 
@@ -64,6 +58,7 @@ class Constant {
             snackbar.show()
         }
 
+        @SuppressLint("SetTextI18n")
         fun View.showDialog(totalCorrectAns:String,
                             totalQuestions:String,
                             categoryType:String,
@@ -75,6 +70,10 @@ class Constant {
                 null,
                 false
             )
+            if (timeSET =="null"){
+                binding.lylTotalTime.visibility = View.GONE
+                binding.lylTakenTime.visibility = View.GONE
+            }
             binding.txtCategoryType.text = categoryType
             binding.txtScored.text = totalCorrectAns
             binding.txtTotalQue.text = totalQuestions
@@ -83,11 +82,11 @@ class Constant {
 
             binding.txtStart.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putString(totalCorrectAnswer, totalCorrectAns)
-                bundle.putString(totalQuestion, totalQuestions)
-                bundle.putString(categorys, categoryType)
-                bundle.putString(saveTimes, saveTime)
-                bundle.putString(displayTimer, timeSET)
+                bundle.putString(TOTAL_CORRECT_ANS, totalCorrectAns)
+                bundle.putString(TOTAL_QUESTIONS, totalQuestions)
+                bundle.putString(CATEGORYS, categoryType)
+                bundle.putString(SAVE_TIMES, saveTime)
+                bundle.putString(DISPLAY_TIME, timeSET)
                 findNavController().navigate(R.id.resultFragment, bundle)
                 dialog?.cancel()
             }

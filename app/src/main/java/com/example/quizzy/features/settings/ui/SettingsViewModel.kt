@@ -9,11 +9,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
-import com.example.quizzy.core.utils.Constant.Companion.categorysId
-import com.example.quizzy.core.utils.Constant.Companion.difficultySType
-import com.example.quizzy.core.utils.Constant.Companion.isChecked
-import com.example.quizzy.core.utils.Constant.Companion.numberOfQue
-import com.example.quizzy.core.utils.Constant.Companion.questionSType
+import com.example.quizzy.core.utils.Constant.Companion.CATEGORY_ID
+import com.example.quizzy.core.utils.Constant.Companion.DIFFICULTY_TYPE
+import com.example.quizzy.core.utils.Constant.Companion.ISCHECKED
+import com.example.quizzy.core.utils.Constant.Companion.NUMBER_QUESTION
+import com.example.quizzy.core.utils.Constant.Companion.QUESTIONS_TYPE
 import com.example.quizzy.core.utils.NetworkUtils
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.settings.data.CategoryListResponse
@@ -85,20 +85,20 @@ class SettingsViewModel @Inject constructor(
     //Save the data in shared preference
     fun saveSettings(nQuestion:String, categoryID: String, difficultyType: String, questionsType: String, isCheck: Boolean) {
         sharedPreferences.edit()
-            .putString(numberOfQue, nQuestion)
-            .putString(categorysId, categoryID)
-            .putString(difficultySType, difficultyType)
-            .putString(questionSType, questionsType)
-            .putBoolean(isChecked, isCheck)
+            .putString(NUMBER_QUESTION, nQuestion)
+            .putString(CATEGORY_ID, categoryID)
+            .putString(DIFFICULTY_TYPE, difficultyType)
+            .putString(QUESTIONS_TYPE, questionsType)
+            .putBoolean(ISCHECKED, isCheck)
             .apply()
     }
 
     //Get the data from shared preference
-    fun getNumberQuestions() = sharedPreferences.getString(numberOfQue, null)
-    fun getCategorysID() = sharedPreferences.getString(categorysId, null)
-    fun getDifficultysType() = sharedPreferences.getString(difficultySType, null)
-    fun getQuestionssType() = sharedPreferences.getString(questionSType, null)
-    fun getIsChecked() = sharedPreferences.getBoolean(isChecked,false)
+    fun getNumberQuestions() = sharedPreferences.getString(NUMBER_QUESTION, null)
+    fun getCategorysID() = sharedPreferences.getString(CATEGORY_ID, null)
+    fun getDifficultysType() = sharedPreferences.getString(DIFFICULTY_TYPE, null)
+    fun getQuestionssType() = sharedPreferences.getString(QUESTIONS_TYPE, null)
+    fun getIsChecked() = sharedPreferences.getBoolean(ISCHECKED,false)
 
     //Check Internet connection
     @RequiresApi(Build.VERSION_CODES.M)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -18,12 +19,13 @@ import java.util.*
 
 
 @Suppress("UNREACHABLE_CODE", "DEPRECATION")
-class QuizAdapter(
-    private val quizeViewModel: QuizViewModel,
+class QuestionAdapter(
+    private val quizeViewModel: QuestionViewModel,
     private val context: Context,
     private val settingsViewModel: SettingsViewModel
-) : RecyclerView.Adapter<QuizAdapter.ViewPagerHolder>() {
+) : RecyclerView.Adapter<QuestionAdapter.ViewPagerHolder>() {
 
+    lateinit var subLayout: View
     private val answerSet = HashSet<String>()
     private var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
@@ -77,17 +79,18 @@ class QuizAdapter(
         answerSet.add(quize.correct_answer!!)
         answerSet.addAll(quize.incorrect_answers!!)
         for (i in 0 until answerSet.size) {
-
-            val subLayout = LayoutInflater.from(holder.itemView.context)
+            subLayout = LayoutInflater.from(holder.itemView.context)
                 .inflate(R.layout.custom_items_answer, holder.view.lylCustomTextview, false)
             val textAnswer = subLayout.findViewById<TextView>(R.id.txtAns)
             val data = answerSet.elementAt(i)
             textAnswer.text = data
             holder.view.lylCustomTextview.addView(subLayout)
+
             val quizAnswer = textAnswer.text.toString()
             textAnswer.setOnClickListener {
                 getAnswerAction(quizAnswer, textAnswer, quize)
             }
+
         }
 
     }

@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
-import com.example.quizzy.core.utils.Constant.Companion.SETTIMER
+import com.example.quizzy.core.utils.Constant.Companion.SET_TIMER
 import com.example.quizzy.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,14 +25,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        clickHandle()
+        buttonClickHandle()
     }
 
     //Handle the click for redirection
-    private fun clickHandle() {
+    private fun buttonClickHandle() {
         getBindingClass().startPlay.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString(SETTIMER, "Timer")
+            bundle.putString(SET_TIMER, "Timer")
             findNavController().navigate(R.id.quizeFragment2, bundle)
         }
 

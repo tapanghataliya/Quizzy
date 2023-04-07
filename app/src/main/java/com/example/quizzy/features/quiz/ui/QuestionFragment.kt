@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
-import com.example.quizzy.core.utils.Constant.Companion.SETTIMER
-import com.example.quizzy.core.utils.Constant.Companion.noInternet
-import com.example.quizzy.core.utils.Constant.Companion.selectAnswer
+import com.example.quizzy.core.utils.Constant.Companion.SET_TIMER
+import com.example.quizzy.core.utils.Constant.Companion.NO_INTERNET
+import com.example.quizzy.core.utils.Constant.Companion.NO_RECORD
+import com.example.quizzy.core.utils.Constant.Companion.SELECT_ANSWER
 import com.example.quizzy.core.utils.Constant.Companion.showDialog
 import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
 import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
@@ -26,10 +26,10 @@ import dagger.hilt.android.AndroidEntryPoint
  * In this fragment display question and answer to select and get result.
  */
 @AndroidEntryPoint
-class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
+class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>() {
 
-    private lateinit var quizAdapter: QuizAdapter
-    private lateinit var timeSET: String
+    private lateinit var questionAdapter: QuestionAdapter
+    private lateinit var timeSet: String
     private val settingsViewModel: SettingsViewModel by viewModels()
 
     var totalQuestions: Int = 0
@@ -44,7 +44,7 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[QuizViewModel::class.java]
+        viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -53,11 +53,11 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
 
         val arguments = arguments
         if (arguments != null) {
-            timeSET = arguments.getString(SETTIMER).toString()
+            timeSet = arguments.getString(SET_TIMER).toString()
             getBindingClass().txtTimer.visibility = View.VISIBLE
 
         } else {
-            timeSET = arguments?.getString(SETTIMER).toString()
+            timeSet = arguments?.getString(SET_TIMER).toString()
             getBindingClass().txtTimer.visibility = View.GONE
         }
 
@@ -69,40 +69,44 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
         isChecked = settingsViewModel.getIsChecked().toString()
 
         context?.let { viewModel.checkInternetConnection(it) }
-        viewModel.isConnected.observe(viewLifecycleOwner, Observer { isConnected->
+        viewModel.isConnected.observe(viewLifecycleOwner) { isConnected->
             if (isConnected){
                 getBindingClass().rlQuiz.visibility = View.VISIBLE
                 getBindingClass().imgNoInternet.visibility = View.GONE
                 quizQuestionList()
             }else{
-                view.showSnackRedBar(noInternet)
+                view.showSnackRedBar(NO_INTERNET)
                 getBindingClass().rlQuiz.visibility = View.GONE
                 getBindingClass().imgNoInternet.visibility = View.VISIBLE
             }
-        })
-        clickHandle()
+        }
+        buttonClickHandler()
     }
 
     //Display Question in view pager
     private fun quizQuestionList() {
-        quizAdapter = QuizAdapter(viewModel, requireContext(), settingsViewModel)
-        getBindingClass().viewPager.adapter = quizAdapter
-        viewModel.questionResponse.observe(viewLifecycleOwner, Observer  {
-            when(it.status){
+        questionAdapter = QuestionAdapter(viewModel, requireContext(), settingsViewModel)
+        getBindingClass().viewPager.adapter = questionAdapter
+        viewModel.questionResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
                 Status.SUCCESS -> {
                     getBindingClass().progressBar.visibility = View.GONE
                     getBindingClass().viewPager.visibility = View.VISIBLE
-                    it.data.let {res->
+                    it.data.let { res ->
                         when (res?.response_code) {
                             0 -> {
-                                res.results?.let { it1 -> quizAdapter.questionList(it1) }
+                                res.results?.let { it1 -> questionAdapter.questionList(it1) }
                                 setTimer()
                             }
                             1 -> {
-                                view?.showSnackBar(it.message)
+                                view?.showSnackBar(NO_RECORD)
+                                getBindingClass().imgNoRecord.visibility = View.VISIBLE
+                                getBindingClass().rlQuiz.visibility = View.GONE
                             }
                             2 -> {
-                                view?.showSnackBar(it.message)
+                                view?.showSnackBar(NO_RECORD)
+                                getBindingClass().imgNoRecord.visibility = View.VISIBLE
+                                getBindingClass().rlQuiz.visibility = View.GONE
                             }
                             else -> {
                                 view?.showSnackBar(it.message)
@@ -120,7 +124,7 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
                     view?.showSnackBar(it.message)
                 }
             }
-        })
+        }
 
         if (categoryID == "null") {
             viewModel.getQuestionList("10", "", "", "")
@@ -128,7 +132,7 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
             viewModel.getQuestionList(nQuestion, categoryID, difficultyType, questionsType)
         }
 
-        quizAdapter.setItemClick(object : QuizAdapter.OnItemClickListener {
+        questionAdapter.setItemClick(object : QuestionAdapter.OnItemClickListener {
             override fun onClick(text: String, totalQue: Int, categorysType: String) {
                 isClick = true
                 totalCorrectAns = text
@@ -140,11 +144,11 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
 
     //Display reverse 30 second timer
     private fun setTimer() {
-        viewModel.currentTime.observe(viewLifecycleOwner, Observer { timeLeft ->
+        viewModel.currentTime.observe(viewLifecycleOwner) { timeLeft ->
 
             getBindingClass().txtTimer.text = timeLeft
 
-        })
+        }
         viewModel.startTimer()
     }
 
@@ -155,21 +159,21 @@ class QuizeFragment : BaseFragment<FragmentQuizeBinding, QuizViewModel>() {
     }
 
     //Handle click for next question display
-    private fun clickHandle() {
+    private fun buttonClickHandler() {
         getBindingClass().imgNext.setOnClickListener {
             nextDataShow()
         }
 
         getBindingClass().lylSubmit.setOnClickListener {
             if (!isClick){
-                view?.showSnackBar(selectAnswer)
+                view?.showSnackBar(SELECT_ANSWER)
             }else{
                 viewModel.cancelTimer()
                 val saveTime = getBindingClass().txtTimer.text
                 if (nQuestion == "null"){
-                    view?.showDialog(totalCorrectAns, "10", category, saveTime.toString(), timeSET)
+                    view?.showDialog(totalCorrectAns, "10", category, saveTime.toString(), timeSet)
                 }else{
-                    view?.showDialog(totalCorrectAns, nQuestion, category, saveTime.toString(), timeSET)
+                    view?.showDialog(totalCorrectAns, nQuestion, category, saveTime.toString(), timeSet)
                 }
             }
         }

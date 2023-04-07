@@ -198,6 +198,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/nointernet"
             android:contentDescription="@string/nointernet"
+            android:padding="@dimen/dimen_30dp"
             android:visibility="gone"/>
     </LinearLayout>
 

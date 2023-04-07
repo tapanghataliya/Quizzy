@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.quizzy.features.quiz.ui.QuizViewModel" />
+            type="com.example.quizzy.features.quiz.ui.QuestionViewModel" />
     </data>
 
     <LinearLayout
@@ -16,7 +16,8 @@
         <RelativeLayout
             android:id="@+id/rlQuiz"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
@@ -104,8 +105,18 @@
             android:id="@+id/imgNoInternet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/nointernet"
+            android:src="@drawable/nointernet_2"
             android:contentDescription="@string/nointernet"
+            android:padding="@dimen/dimen_30sp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/imgNoRecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/nodata"
+            android:contentDescription="@string/nointernet"
+            android:padding="@dimen/dimen_30sp"
             android:visibility="gone"/>
     </LinearLayout>
 </layout>

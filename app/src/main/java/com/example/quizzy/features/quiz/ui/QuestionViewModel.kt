@@ -21,7 +21,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class QuizViewModel @Inject constructor(
+class QuestionViewModel @Inject constructor(
     private val questionRepository: QuestionRepository,
     @ApplicationContext private val context: Context
 ) : BaseViewModel<BaseNavigator>() {

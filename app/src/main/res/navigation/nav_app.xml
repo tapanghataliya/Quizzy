@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/quizeFragment2"
-        android:name="com.example.quizzy.features.quiz.ui.QuizeFragment"
+        android:name="com.example.quizzy.features.quiz.ui.QuestionFragment"
         android:label="Question" >
         <action
             android:id="@+id/action_quizeFragment2_to_homeFragment"
@@ -41,7 +41,11 @@
         android:id="@+id/resultFragment"
         android:name="com.example.quizzy.features.result.ResultFragment"
         android:label="Result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/solutionFragment"
         android:name="com.example.quizzy.features.solution.ui.SolutionFragment"

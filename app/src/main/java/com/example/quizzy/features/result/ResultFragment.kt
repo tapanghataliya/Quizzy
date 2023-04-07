@@ -8,11 +8,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
-import com.example.quizzy.core.utils.Constant.Companion.categorys
-import com.example.quizzy.core.utils.Constant.Companion.displayTimer
-import com.example.quizzy.core.utils.Constant.Companion.saveTimes
-import com.example.quizzy.core.utils.Constant.Companion.totalCorrectAnswer
-import com.example.quizzy.core.utils.Constant.Companion.totalQuestion
+import com.example.quizzy.core.utils.Constant.Companion.CATEGORYS
+import com.example.quizzy.core.utils.Constant.Companion.DISPLAY_TIME
+import com.example.quizzy.core.utils.Constant.Companion.SAVE_TIMES
+import com.example.quizzy.core.utils.Constant.Companion.TOTAL_CORRECT_ANS
+import com.example.quizzy.core.utils.Constant.Companion.TOTAL_QUESTIONS
 import com.example.quizzy.databinding.FragmentResultBinding
 
 class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
@@ -33,11 +33,11 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         val arguments = arguments
         if (arguments != null){
-            totalQuestions = arguments.getString(totalQuestion).toString()
-            totalCorrectAns = arguments.getString(totalCorrectAnswer).toString()
-            categoryType = arguments.getString(categorys).toString()
-            saveTime = arguments.getString(saveTimes).toString()
-            timeSET = arguments.getString(displayTimer).toString()
+            totalQuestions = arguments.getString(TOTAL_QUESTIONS).toString()
+            totalCorrectAns = arguments.getString(TOTAL_CORRECT_ANS).toString()
+            categoryType = arguments.getString(CATEGORYS).toString()
+            saveTime = arguments.getString(SAVE_TIMES).toString()
+            timeSET = arguments.getString(DISPLAY_TIME).toString()
             if (timeSET == "null"){
                 getBindingClass().cardTime.visibility = View.GONE
                 getBindingClass().cardTimeTaken.visibility = View.GONE

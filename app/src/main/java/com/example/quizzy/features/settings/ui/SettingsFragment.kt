@@ -6,12 +6,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
-import com.example.quizzy.core.utils.Constant.Companion.noInternet
+import com.example.quizzy.core.utils.Constant.Companion.NO_INTERNET
+import com.example.quizzy.core.utils.Constant.Companion.NO_RECORD
 import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
 import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
 import com.example.quizzy.core.utils.Status
@@ -42,25 +42,22 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
         context?.let { viewModel.checkInternetConnection(it) }
-        viewModel.isConnected.observe(viewLifecycleOwner, Observer { isConnected->
+        viewModel.isConnected.observe(viewLifecycleOwner) { isConnected->
             if (isConnected){
                 getBindingClass().rlMain.visibility = View.VISIBLE
                 getBindingClass().imgNoInternet.visibility = View.GONE
                 getCategortList()
             }else{
-                view.showSnackRedBar(noInternet)
+                view.showSnackRedBar(NO_INTERNET)
                 getBindingClass().rlMain.visibility = View.GONE
                 getBindingClass().imgNoInternet.visibility = View.VISIBLE
             }
             getNumberOfQueList()
             getDifficultyList()
             getQuestionTypeList()
-            clickHandle()
-        })
+            buttonClickHandler()
+        }
     }
 
     //Number of questions list
@@ -91,7 +88,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     //Category List display.
     private fun getCategortList() {
 
-        viewModel.categorysResponse.observe(viewLifecycleOwner, Observer {
+        viewModel.categorysResponse.observe(viewLifecycleOwner) {
             when(it.status){
                 Status.LOADING->{
                     getBindingClass().progressBar.visibility = View.VISIBLE
@@ -128,10 +125,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
                 Status.ERROR->{
                     getBindingClass().progressBar.visibility = View.GONE
-                    view?.showSnackBar(it.message)
+                    view?.showSnackBar(NO_RECORD)
                 }
             }
-        })
+        }
         viewModel.getCategory()
     }
 
@@ -187,7 +184,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         viewModel.getQuestionType()
     }
 
-    private fun clickHandle() {
+    private fun buttonClickHandler() {
 
         getBindingClass().switchSound.setOnCheckedChangeListener{_, isChecked ->
             isCheck = isChecked
