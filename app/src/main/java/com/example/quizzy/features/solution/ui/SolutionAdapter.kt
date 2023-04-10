@@ -49,6 +49,7 @@ class SolutionAdapter : RecyclerView.Adapter<SolutionAdapter.ViewPagerHolder>() 
     override fun onBindViewHolder(holder: ViewPagerHolder, position: Int) {
         val quize = differ.currentList[position]
         holder.view.txtQuestion.text = quize.question
+        holder.view.txtDifficultyType.text = quize.difficulty
         holder.view.txtCategory.text = quize.category
 
         val queNumber = position + 1

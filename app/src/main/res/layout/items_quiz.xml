@@ -87,10 +87,20 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/txtCategory"
+                    android:id="@+id/txtDifficultyType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_30dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/white"

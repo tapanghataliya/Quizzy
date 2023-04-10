@@ -17,6 +17,7 @@ import com.example.quizzy.core.utils.Constant.Companion.QUESTIONS_TYPE
 import com.example.quizzy.core.utils.NetworkUtils
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.settings.data.CategoryListResponse
+import com.example.quizzy.features.settings.data.MySettingsData
 import com.example.quizzy.features.settings.data.TriviaCategory
 import com.example.quizzy.features.settings.domain.SettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,10 +47,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _categoryRes.postValue(Resource.loading(null))
             settingRepository.getCategoryList().let {
-                if (it.isSuccessful){
+                if (it.isSuccessful) {
                     _categoryRes.postValue(Resource.success(it.body()))
-                }else{
-                    _categoryRes.postValue(Resource.error(it.errorBody().toString(),null))
+                } else {
+                    _categoryRes.postValue(Resource.error(it.errorBody().toString(), null))
                 }
             }
         }
@@ -82,27 +83,37 @@ class SettingsViewModel @Inject constructor(
         questionTypeList.value = type
     }
 
-    //Save the data in shared preference
-    fun saveSettings(nQuestion:String, categoryID: String, difficultyType: String, questionsType: String, isCheck: Boolean) {
-        sharedPreferences.edit()
-            .putString(NUMBER_QUESTION, nQuestion)
-            .putString(CATEGORY_ID, categoryID)
-            .putString(DIFFICULTY_TYPE, difficultyType)
-            .putString(QUESTIONS_TYPE, questionsType)
-            .putBoolean(ISCHECKED, isCheck)
-            .apply()
-    }
-
-    //Get the data from shared preference
-    fun getNumberQuestions() = sharedPreferences.getString(NUMBER_QUESTION, null)
-    fun getCategorysID() = sharedPreferences.getString(CATEGORY_ID, null)
-    fun getDifficultysType() = sharedPreferences.getString(DIFFICULTY_TYPE, null)
-    fun getQuestionssType() = sharedPreferences.getString(QUESTIONS_TYPE, null)
-    fun getIsChecked() = sharedPreferences.getBoolean(ISCHECKED,false)
-
     //Check Internet connection
     @RequiresApi(Build.VERSION_CODES.M)
     fun checkInternetConnection(context: Context) {
         _isConnected.value = NetworkUtils.isNetworkConnected(context)
+    }
+
+    //Save the data in shared preference
+    fun saveSettingData(mySettingsData: MySettingsData) {
+        sharedPreferences.edit()
+            .putString(NUMBER_QUESTION, mySettingsData.nQuestion)
+            .putString(CATEGORY_ID, mySettingsData.categoryID)
+            .putString(DIFFICULTY_TYPE, mySettingsData.difficultyType)
+            .putString(QUESTIONS_TYPE, mySettingsData.questionsType)
+            .putBoolean(ISCHECKED, mySettingsData.isCheck)
+            .apply()
+    }
+
+    //Get the data from shared preference
+    fun getsaveSettingData(): MySettingsData {
+        val numberQuestions = sharedPreferences.getString(NUMBER_QUESTION, "") ?: ""
+        val categorysID = sharedPreferences.getString(CATEGORY_ID, "") ?: ""
+        val difficultysType = sharedPreferences.getString(DIFFICULTY_TYPE, "") ?: ""
+        val questionssType = sharedPreferences.getString(QUESTIONS_TYPE, "") ?: ""
+        val IsChecked = sharedPreferences.getBoolean(ISCHECKED, false)
+
+        return MySettingsData(
+            numberQuestions,
+            categorysID,
+            difficultysType,
+            questionssType,
+            IsChecked
+        )
     }
 }

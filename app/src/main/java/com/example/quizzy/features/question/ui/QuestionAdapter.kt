@@ -25,7 +25,7 @@ class QuestionAdapter(
     private val settingsViewModel: SettingsViewModel
 ) : RecyclerView.Adapter<QuestionAdapter.ViewPagerHolder>() {
 
-    lateinit var subLayout: View
+    private lateinit var subLayout: View
     private val answerSet = HashSet<String>()
     private var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
@@ -68,6 +68,7 @@ class QuestionAdapter(
     override fun onBindViewHolder(holder: ViewPagerHolder, position: Int) {
         val quize = differ.currentList[position]
         holder.view.txtQuestion.text = quize.question
+        holder.view.txtDifficultyType.text = quize.difficulty
         holder.view.txtCategory.text = quize.category
 
         val queNumber = position + 1
@@ -97,7 +98,7 @@ class QuestionAdapter(
 
     //Answer click get correct answer perform action
     private fun getAnswerAction(quizAnswer: String, textAnswer: TextView?, quize: Results?) {
-        if (settingsViewModel.getIsChecked()) {
+        if (settingsViewModel.getsaveSettingData().isCheck) {
             if (quize?.correct_answer == quizAnswer) {
                 textAnswer!!.setBackgroundResource(R.color.green)
                 textAnswer.setTextColor(Color.WHITE)

@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
-import com.example.quizzy.core.utils.Constant.Companion.SET_TIMER
 import com.example.quizzy.core.utils.Constant.Companion.NO_INTERNET
 import com.example.quizzy.core.utils.Constant.Companion.NO_RECORD
 import com.example.quizzy.core.utils.Constant.Companion.SELECT_ANSWER
+import com.example.quizzy.core.utils.Constant.Companion.SET_TIMER
 import com.example.quizzy.core.utils.Constant.Companion.showDialog
 import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
 import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
@@ -61,12 +61,11 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
             getBindingClass().txtTimer.visibility = View.GONE
         }
 
-
-        nQuestion = settingsViewModel.getNumberQuestions().toString()
-        categoryID = settingsViewModel.getCategorysID().toString()
-        difficultyType = settingsViewModel.getDifficultysType().toString()
-        questionsType = settingsViewModel.getQuestionssType().toString()
-        isChecked = settingsViewModel.getIsChecked().toString()
+        nQuestion = settingsViewModel.getsaveSettingData().nQuestion
+        categoryID = settingsViewModel.getsaveSettingData().categoryID
+        difficultyType = settingsViewModel.getsaveSettingData().difficultyType
+        questionsType = settingsViewModel.getsaveSettingData().questionsType
+        isChecked = settingsViewModel.getsaveSettingData().isCheck.toString()
 
         context?.let { viewModel.checkInternetConnection(it) }
         viewModel.isConnected.observe(viewLifecycleOwner) { isConnected->
@@ -126,7 +125,7 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
             }
         }
 
-        if (categoryID == "null") {
+        if (categoryID == "") {
             viewModel.getQuestionList("10", "", "", "")
         } else {
             viewModel.getQuestionList(nQuestion, categoryID, difficultyType, questionsType)
@@ -170,10 +169,10 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
             }else{
                 viewModel.cancelTimer()
                 val saveTime = getBindingClass().txtTimer.text
-                if (nQuestion == "null"){
-                    view?.showDialog(totalCorrectAns, "10", category, saveTime.toString(), timeSet)
+                if (nQuestion == ""){
+                    view?.showDialog(totalCorrectAns, "10", category, saveTime.toString(), timeSet, difficultyType)
                 }else{
-                    view?.showDialog(totalCorrectAns, nQuestion, category, saveTime.toString(), timeSet)
+                    view?.showDialog(totalCorrectAns, nQuestion, category, saveTime.toString(), timeSet, difficultyType)
                 }
             }
         }

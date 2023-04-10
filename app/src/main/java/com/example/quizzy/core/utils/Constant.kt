@@ -3,7 +3,6 @@ package com.example.quizzy.core.utils
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +62,8 @@ class Constant {
                             totalQuestions:String,
                             categoryType:String,
                             saveTime:String,
-                            timeSET:String,){
+                            timeSET:String,
+                            difficultyType:String){
             val binding = DataBindingUtil.inflate<QuizPopupBinding>(
                 LayoutInflater.from(context),
                 R.layout.quiz_popup,
@@ -74,7 +74,10 @@ class Constant {
                 binding.lylTotalTime.visibility = View.GONE
                 binding.lylTakenTime.visibility = View.GONE
             }
+
+            if (difficultyType == "")binding.lylDifficultyType.visibility = View.GONE else binding.lylDifficultyType.visibility = View.VISIBLE
             binding.txtCategoryType.text = categoryType
+            binding.txtDifficultyType.text = difficultyType
             binding.txtScored.text = totalCorrectAns
             binding.txtTotalQue.text = totalQuestions
             binding.txtQuizType.text = categoryType
@@ -83,6 +86,7 @@ class Constant {
             binding.txtStart.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString(TOTAL_CORRECT_ANS, totalCorrectAns)
+                bundle.putString(DIFFICULTY_TYPE, difficultyType)
                 bundle.putString(TOTAL_QUESTIONS, totalQuestions)
                 bundle.putString(CATEGORYS, categoryType)
                 bundle.putString(SAVE_TIMES, saveTime)

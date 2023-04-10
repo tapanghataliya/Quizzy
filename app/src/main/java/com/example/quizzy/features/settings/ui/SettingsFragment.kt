@@ -2,6 +2,7 @@ package com.example.quizzy.features.settings.ui
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,6 +17,7 @@ import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
 import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
 import com.example.quizzy.core.utils.Status
 import com.example.quizzy.databinding.FragmentSettingsBinding
+import com.example.quizzy.features.settings.data.MySettingsData
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -186,15 +188,16 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     private fun buttonClickHandler() {
 
-        getBindingClass().switchSound.isChecked = viewModel.getIsChecked() != false
+        getBindingClass().switchSound.isChecked = viewModel.getsaveSettingData().isCheck != false
         getBindingClass().switchSound.setOnCheckedChangeListener{_, isChecked ->
             isCheck = isChecked
-            viewModel.getIsChecked()
+            viewModel.getsaveSettingData().isCheck
         }
 
         getBindingClass().txtSubmit.setOnClickListener {
-            // Saved string in SharedPreferences
-            viewModel.saveSettings(numberQuestions,categoryID, difficultyType, questionsType, isCheck)
+            // Saved data in SharedPreferences
+            val mySettingsData = MySettingsData(numberQuestions,categoryID, difficultyType, questionsType, isCheck)
+            viewModel.saveSettingData(mySettingsData)
             activity?.onBackPressed()
         }
     }

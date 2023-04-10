@@ -3,7 +3,6 @@ package com.example.quizzy.features.solution.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.quizzy.BR
 import com.example.quizzy.R
@@ -34,11 +33,11 @@ class SolutionFragment: BaseFragment<FragmentSolutionBinding, SolutionViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nQuestion = settingsViewModel.getNumberQuestions().toString()
-        categoryID = settingsViewModel.getCategorysID().toString()
-        difficultyType = settingsViewModel.getDifficultysType().toString()
-        questionsType = settingsViewModel.getQuestionssType().toString()
-        isChecked = settingsViewModel.getIsChecked().toString()
+        nQuestion = settingsViewModel.getsaveSettingData().nQuestion
+        categoryID = settingsViewModel.getsaveSettingData().categoryID
+        difficultyType = settingsViewModel.getsaveSettingData().difficultyType
+        questionsType = settingsViewModel.getsaveSettingData().questionsType
+        isChecked = settingsViewModel.getsaveSettingData().isCheck.toString()
 
         solutionList()
         clickHandle()
@@ -47,7 +46,7 @@ class SolutionFragment: BaseFragment<FragmentSolutionBinding, SolutionViewModel>
     private fun solutionList() {
         solutionAdapter = SolutionAdapter()
         getBindingClass().viewPager.adapter = solutionAdapter
-        viewModel.solutionResponse.observe(viewLifecycleOwner, Observer  {
+        viewModel.solutionResponse.observe(viewLifecycleOwner)  {
             when(it.status){
                 Status.SUCCESS -> {
                     getBindingClass().progressBar.visibility = View.GONE
@@ -79,7 +78,7 @@ class SolutionFragment: BaseFragment<FragmentSolutionBinding, SolutionViewModel>
                     view?.showSnackBar(it.message)
                 }
             }
-        })
+        }
         if (categoryID == "null") {
             viewModel.getQuestionList("10", "", "", "")
         } else {
