@@ -2,7 +2,6 @@ package com.example.quizzy.features.settings.ui
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -31,6 +30,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     lateinit var numberQuestions : String
     lateinit var categoryID : String
+    lateinit var categoryName : String
     lateinit var difficultyType : String
     lateinit var questionsType : String
     private var isCheck = false
@@ -66,13 +66,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     private fun getNumberOfQueList() {
         viewModel.getNumberOfQuestion()
         viewModel.numberQuesList.observe(viewLifecycleOwner){ data ->
-            val difficultyAdapter = ArrayAdapter(
+            val numberAdapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
                 data
             )
 
-            getBindingClass().spnNumberQuestions.adapter = difficultyAdapter
+            getBindingClass().spnNumberQuestions.adapter = numberAdapter
 
             //Item click to get number of questions
             getBindingClass().spnNumberQuestions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -84,6 +84,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 override fun onNothingSelected(parent: AdapterView<*>) {
                 }
             }
+            val spinnerPosition = numberAdapter.getPosition(viewModel.getsaveSettingData().nQuestion)
+            getBindingClass().spnNumberQuestions.setSelection(spinnerPosition)
         }
     }
 
@@ -117,11 +119,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
 
                                 categoryID = viewModel.categorysResponse.value?.data?.trivia_categories?.get(position)?.id.toString()
+                                categoryName = viewModel.categorysResponse.value?.data?.trivia_categories?.get(position)?.name.toString()
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
+                        val spinnerPosition = spinnerAdapter.getPosition(viewModel.getsaveSettingData().categoryName)
+                        getBindingClass().spnCategory.setSelection(spinnerPosition)
                     }
                 }
 
@@ -157,6 +162,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 override fun onNothingSelected(parent: AdapterView<*>) {
                 }
             }
+            val spinnerPosition = difficultyAdapter.getPosition(viewModel.getsaveSettingData().difficultyType)
+            getBindingClass().spnDifficulty.setSelection(spinnerPosition)
         }
         viewModel.getDifficultyList()
     }
@@ -182,6 +189,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     // Do nothing when nothing is selected
                 }
             }
+            val spinnerPosition = typeAdapter.getPosition(viewModel.getsaveSettingData().questionsType)
+            getBindingClass().spnType.setSelection(spinnerPosition)
         }
         viewModel.getQuestionType()
     }
@@ -196,7 +205,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
         getBindingClass().txtSubmit.setOnClickListener {
             // Saved data in SharedPreferences
-            val mySettingsData = MySettingsData(numberQuestions,categoryID, difficultyType, questionsType, isCheck)
+            val mySettingsData = MySettingsData(numberQuestions,categoryID,categoryName, difficultyType, questionsType, isCheck)
             viewModel.saveSettingData(mySettingsData)
             activity?.onBackPressed()
         }

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
 import com.example.quizzy.core.utils.Constant.Companion.CATEGORY_ID
+import com.example.quizzy.core.utils.Constant.Companion.CATEGORY_NAME
 import com.example.quizzy.core.utils.Constant.Companion.DIFFICULTY_TYPE
 import com.example.quizzy.core.utils.Constant.Companion.ISCHECKED
 import com.example.quizzy.core.utils.Constant.Companion.NUMBER_QUESTION
@@ -94,6 +95,7 @@ class SettingsViewModel @Inject constructor(
         sharedPreferences.edit()
             .putString(NUMBER_QUESTION, mySettingsData.nQuestion)
             .putString(CATEGORY_ID, mySettingsData.categoryID)
+            .putString(CATEGORY_NAME, mySettingsData.categoryName)
             .putString(DIFFICULTY_TYPE, mySettingsData.difficultyType)
             .putString(QUESTIONS_TYPE, mySettingsData.questionsType)
             .putBoolean(ISCHECKED, mySettingsData.isCheck)
@@ -104,6 +106,7 @@ class SettingsViewModel @Inject constructor(
     fun getsaveSettingData(): MySettingsData {
         val numberQuestions = sharedPreferences.getString(NUMBER_QUESTION, "") ?: ""
         val categorysID = sharedPreferences.getString(CATEGORY_ID, "") ?: ""
+        val categoryName = sharedPreferences.getString(CATEGORY_NAME, "") ?: ""
         val difficultysType = sharedPreferences.getString(DIFFICULTY_TYPE, "") ?: ""
         val questionssType = sharedPreferences.getString(QUESTIONS_TYPE, "") ?: ""
         val IsChecked = sharedPreferences.getBoolean(ISCHECKED, false)
@@ -111,6 +114,7 @@ class SettingsViewModel @Inject constructor(
         return MySettingsData(
             numberQuestions,
             categorysID,
+            categoryName,
             difficultysType,
             questionssType,
             IsChecked

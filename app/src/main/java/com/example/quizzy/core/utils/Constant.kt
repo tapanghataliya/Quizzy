@@ -25,6 +25,7 @@ class Constant {
         const val SET_TIMER = "time"
         const val NUMBER_QUESTION = "numberOfQue"
         const val CATEGORY_ID = "categoryID"
+        const val CATEGORY_NAME = "categoryName"
         const val DIFFICULTY_TYPE = "difficultyType"
         const val QUESTIONS_TYPE = "questionsType"
         const val ISCHECKED = "false"
