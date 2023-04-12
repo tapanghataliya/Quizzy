@@ -78,5 +78,8 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
         return R.layout.fragment_result
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        getBindingClass().unbind()
+    }
 }

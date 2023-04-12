@@ -57,4 +57,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(){
         return R.layout.fragment_home
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        getBindingClass().unbind()
+    }
 }

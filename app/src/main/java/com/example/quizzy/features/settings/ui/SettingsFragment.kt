@@ -103,7 +103,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
                     it.data.let{res->
 
-                        val spinnerAdapter =
+                        val categorysAdapter =
                             ArrayAdapter(
                                 requireContext(),
                                 android.R.layout.simple_spinner_item,
@@ -111,8 +111,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                                     it1.name
                                 }
                             )
-                        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        getBindingClass().spnCategory.adapter = spinnerAdapter
+                        categorysAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        getBindingClass().spnCategory.adapter = categorysAdapter
 
                         //Item click to get category ID
                         getBindingClass().spnCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -125,7 +125,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                             override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
-                        val spinnerPosition = spinnerAdapter.getPosition(viewModel.getsaveSettingData().categoryName)
+                        val spinnerPosition = categorysAdapter.getPosition(viewModel.getsaveSettingData().categoryName)
                         getBindingClass().spnCategory.setSelection(spinnerPosition)
                     }
                 }
@@ -223,4 +223,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         return R.layout.fragment_settings
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        getBindingClass().unbind()
+    }
 }

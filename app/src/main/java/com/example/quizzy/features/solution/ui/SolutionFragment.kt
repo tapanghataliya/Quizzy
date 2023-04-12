@@ -111,4 +111,9 @@ class SolutionFragment: BaseFragment<FragmentSolutionBinding, SolutionViewModel>
     override fun getLayoutId(): Int {
         return R.layout.fragment_solution
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getBindingClass().unbind()
+    }
 }

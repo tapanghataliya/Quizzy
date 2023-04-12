@@ -155,6 +155,7 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
     override fun onDestroy() {
         super.onDestroy()
         viewModel.cancelTimer()
+        getBindingClass().unbind()
     }
 
     //Handle click for next question display
@@ -197,5 +198,6 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
     override fun getLayoutId(): Int {
         return R.layout.fragment_quize
     }
+
 
 }

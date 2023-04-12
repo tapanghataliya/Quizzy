@@ -3,7 +3,6 @@ package com.example.quizzy.features.splash.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseActivity
 import com.example.quizzy.core.navigators.SplashNavigator
@@ -23,11 +22,11 @@ class SplashActivity : BaseActivity(), SplashNavigator {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        viewModel.splashCompleted.observe(this, Observer {
+        viewModel.splashCompleted.observe(this) {
             if (it) {
                 navigateToDashboard()
             }
-        })
+        }
         viewModel.splashRedirect()
 
     }
