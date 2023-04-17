@@ -7,6 +7,7 @@ import com.example.quizzy.core.apiservices.ApiHelper
 import com.example.quizzy.core.apiservices.ApiHelperImpl
 import com.example.quizzy.core.apiservices.ApiService
 import com.example.quizzy.core.utils.Constant.Companion.BaseURL
+import com.example.quizzy.core.utils.Constant.Companion.KEY_USER_PREFERENCES
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +56,6 @@ class AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context):SharedPreferences{
-        return context.getSharedPreferences("myApplication", Context.MODE_PRIVATE)
+        return context.getSharedPreferences(KEY_USER_PREFERENCES, Context.MODE_PRIVATE)
     }
 }

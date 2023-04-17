@@ -62,7 +62,7 @@ class ResultFragment : BaseFragment<FragmentResultBinding, ResultViewModel>() {
             findNavController().navigate(R.id.solutionFragment)
         }
         getBindingClass().txtReAttempt.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
+            findNavController().navigate(R.id.quizeFragment2)
         }
     }
 

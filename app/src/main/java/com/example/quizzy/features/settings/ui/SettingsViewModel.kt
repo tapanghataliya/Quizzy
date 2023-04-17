@@ -1,7 +1,6 @@
 package com.example.quizzy.features.settings.ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
@@ -9,26 +8,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
-import com.example.quizzy.core.utils.Constant.Companion.CATEGORY_ID
-import com.example.quizzy.core.utils.Constant.Companion.CATEGORY_NAME
-import com.example.quizzy.core.utils.Constant.Companion.DIFFICULTY_TYPE
-import com.example.quizzy.core.utils.Constant.Companion.ISCHECKED
-import com.example.quizzy.core.utils.Constant.Companion.NUMBER_QUESTION
-import com.example.quizzy.core.utils.Constant.Companion.QUESTIONS_TYPE
 import com.example.quizzy.core.utils.NetworkUtils
 import com.example.quizzy.core.utils.Resource
+import com.example.quizzy.core.utils.MyPreferencesManager
 import com.example.quizzy.features.settings.data.CategoryListResponse
 import com.example.quizzy.features.settings.data.MySettingsData
 import com.example.quizzy.features.settings.data.TriviaCategory
 import com.example.quizzy.features.settings.domain.SettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingRepository: SettingRepository,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferenceData: MyPreferencesManager
 ) : BaseViewModel<BaseNavigator>() {
 
     val difficultyList = MutableLiveData<List<TriviaCategory>>()
@@ -90,34 +85,16 @@ class SettingsViewModel @Inject constructor(
         _isConnected.value = NetworkUtils.isNetworkConnected(context)
     }
 
-    //Save the data in shared preference
+    //    //Save the data in shared preference
     fun saveSettingData(mySettingsData: MySettingsData) {
-        sharedPreferences.edit()
-            .putString(NUMBER_QUESTION, mySettingsData.nQuestion)
-            .putString(CATEGORY_ID, mySettingsData.categoryID)
-            .putString(CATEGORY_NAME, mySettingsData.categoryName)
-            .putString(DIFFICULTY_TYPE, mySettingsData.difficultyType)
-            .putString(QUESTIONS_TYPE, mySettingsData.questionsType)
-            .putBoolean(ISCHECKED, mySettingsData.isCheck)
-            .apply()
+        viewModelScope.launch(Dispatchers.IO){
+            sharedPreferenceData.saveSettingData(mySettingsData)
+        }
     }
 
     //Get the data from shared preference
     fun getsaveSettingData(): MySettingsData {
-        val numberQuestions = sharedPreferences.getString(NUMBER_QUESTION, "") ?: ""
-        val categorysID = sharedPreferences.getString(CATEGORY_ID, "") ?: ""
-        val categoryName = sharedPreferences.getString(CATEGORY_NAME, "") ?: ""
-        val difficultysType = sharedPreferences.getString(DIFFICULTY_TYPE, "") ?: ""
-        val questionssType = sharedPreferences.getString(QUESTIONS_TYPE, "") ?: ""
-        val IsChecked = sharedPreferences.getBoolean(ISCHECKED, false)
-
-        return MySettingsData(
-            numberQuestions,
-            categorysID,
-            categoryName,
-            difficultysType,
-            questionssType,
-            IsChecked
-        )
+        return sharedPreferenceData.getsaveSettingData()
     }
+
 }

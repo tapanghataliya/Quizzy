@@ -12,9 +12,8 @@ import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
 import com.example.quizzy.core.utils.Constant.Companion.NO_INTERNET
 import com.example.quizzy.core.utils.Constant.Companion.NO_RECORD
-import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
-import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
 import com.example.quizzy.core.utils.Status
+import com.example.quizzy.core.utils.ViewExt.Companion.showSnackBar
 import com.example.quizzy.databinding.FragmentSettingsBinding
 import com.example.quizzy.features.settings.data.MySettingsData
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +50,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 getBindingClass().imgNoInternet.visibility = View.GONE
                 getCategortList()
             }else{
-                view.showSnackRedBar(NO_INTERNET)
+                view.showSnackBar(NO_INTERNET)
                 getBindingClass().rlMain.visibility = View.GONE
                 getBindingClass().imgNoInternet.visibility = View.VISIBLE
             }

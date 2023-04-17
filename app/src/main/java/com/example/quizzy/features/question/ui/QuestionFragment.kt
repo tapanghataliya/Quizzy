@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
@@ -13,10 +14,9 @@ import com.example.quizzy.core.utils.Constant.Companion.NO_INTERNET
 import com.example.quizzy.core.utils.Constant.Companion.NO_RECORD
 import com.example.quizzy.core.utils.Constant.Companion.SELECT_ANSWER
 import com.example.quizzy.core.utils.Constant.Companion.SET_TIMER
-import com.example.quizzy.core.utils.Constant.Companion.showDialog
-import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
-import com.example.quizzy.core.utils.Constant.Companion.showSnackRedBar
 import com.example.quizzy.core.utils.Status
+import com.example.quizzy.core.utils.ViewExt.Companion.showDialog
+import com.example.quizzy.core.utils.ViewExt.Companion.showSnackBar
 import com.example.quizzy.databinding.FragmentQuizeBinding
 import com.example.quizzy.features.settings.ui.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,7 +74,7 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
                 getBindingClass().imgNoInternet.visibility = View.GONE
                 quizQuestionList()
             }else{
-                view.showSnackRedBar(NO_INTERNET)
+                view.showSnackBar(NO_INTERNET)
                 getBindingClass().rlQuiz.visibility = View.GONE
                 getBindingClass().imgNoInternet.visibility = View.VISIBLE
             }
@@ -86,6 +86,16 @@ class QuestionFragment : BaseFragment<FragmentQuizeBinding, QuestionViewModel>()
     private fun quizQuestionList() {
         questionAdapter = QuestionAdapter(viewModel, requireContext(), settingsViewModel)
         getBindingClass().viewPager.adapter = questionAdapter
+        getBindingClass().viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == getBindingClass().viewPager.adapter?.itemCount?.minus(1)){
+                    getBindingClass().imgNext.visibility = View.GONE
+                }else{
+                    getBindingClass().imgNext.visibility = View.VISIBLE
+                }
+            }
+        })
         viewModel.questionResponse.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {

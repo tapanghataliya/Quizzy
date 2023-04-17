@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.quizzy.BR
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseFragment
-import com.example.quizzy.core.utils.Constant.Companion.showSnackBar
 import com.example.quizzy.core.utils.Status
+import com.example.quizzy.core.utils.ViewExt.Companion.showSnackBar
 import com.example.quizzy.databinding.FragmentSolutionBinding
 import com.example.quizzy.features.settings.ui.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint

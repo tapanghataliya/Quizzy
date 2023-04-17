@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.example.quizzy.features.settings.data.MySettingsData
 import javax.inject.Inject
 
-class MySettingSharedPreference @Inject constructor(
+class MyPreferencesManager @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
     //Save the data in shared preference

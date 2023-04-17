@@ -22,8 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuestionViewModel @Inject constructor(
-    private val questionRepository: QuestionRepository,
-    @ApplicationContext private val context: Context
+    private val questionRepository: QuestionRepository
 ) : BaseViewModel<BaseNavigator>() {
 
     private val _questionRes = MutableLiveData<Resource<QuestionList>>()

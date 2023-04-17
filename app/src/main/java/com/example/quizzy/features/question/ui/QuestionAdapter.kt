@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +25,7 @@ class QuestionAdapter(
     private val quizeViewModel: QuestionViewModel,
     private val context: Context,
     private val settingsViewModel: SettingsViewModel
-) : RecyclerView.Adapter<QuestionAdapter.ViewPagerHolder>() {
+) : RecyclerView.Adapter<QuestionAdapter.ViewPagerHolder>(){
 
     private lateinit var subLayout: View
     private val answerSet = HashSet<String>()
@@ -86,18 +88,20 @@ class QuestionAdapter(
             val data = answerSet.elementAt(i)
             textAnswer.text = data
             holder.view.lylCustomTextview.addView(subLayout)
-
             val quizAnswer = textAnswer.text.toString()
             textAnswer.setOnClickListener {
                 getAnswerAction(quizAnswer, textAnswer, quize)
             }
-
         }
 
     }
 
     //Answer click get correct answer perform action
-    private fun getAnswerAction(quizAnswer: String, textAnswer: TextView?, quize: Results?) {
+    private fun getAnswerAction(
+        quizAnswer: String,
+        textAnswer: TextView?,
+        quize: Results?
+    ) {
         if (settingsViewModel.getsaveSettingData().isCheck) {
             if (quize?.correct_answer == quizAnswer) {
                 textAnswer!!.setBackgroundResource(R.color.green)
@@ -145,4 +149,5 @@ class QuestionAdapter(
     interface OnItemClickListener {
         fun onClick(text: String, totalQue: Int, category: String)
     }
+
 }

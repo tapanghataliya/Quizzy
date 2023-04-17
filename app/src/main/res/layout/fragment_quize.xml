@@ -41,7 +41,7 @@
                 <LinearLayout
                     android:id="@+id/lylMainSubmit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_60dp"
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/shap_top"
                     android:baselineAligned="false"
@@ -50,15 +50,15 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/txtTimer"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimen_16sp"
                             android:textStyle="bold" />
@@ -67,7 +67,7 @@
                     <LinearLayout
                         android:id="@+id/lylSubmit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dimen_15dp"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -88,7 +88,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dimen_15dp"
                         android:layout_weight="1"
                         android:gravity="end"
