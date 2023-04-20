@@ -1,7 +1,7 @@
 package com.example.quizzy.core.apiservices
 
-import com.example.quizzy.features.settings.data.CategoryListResponse
-import com.example.quizzy.features.question.data.QuestionList
+import com.example.quizzy.features.settings.data.model.CategoryListResponse
+import com.example.quizzy.features.question.data.model.QuestionList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

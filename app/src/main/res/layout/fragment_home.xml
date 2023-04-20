@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.quizzy.features.home.HomeViewModel" />
+            type="com.example.quizzy.features.home.viewmodel.HomeViewModel" />
     </data>
 
     <LinearLayout

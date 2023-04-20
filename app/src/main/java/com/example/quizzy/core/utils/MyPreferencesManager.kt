@@ -1,7 +1,7 @@
 package com.example.quizzy.core.utils
 
 import android.content.SharedPreferences
-import com.example.quizzy.features.settings.data.MySettingsData
+import com.example.quizzy.features.settings.data.model.MySettingsData
 import javax.inject.Inject
 
 class MyPreferencesManager @Inject constructor(

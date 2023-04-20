@@ -3,11 +3,14 @@ package com.example.quizzy.core.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
-import com.example.quizzy.core.apiservices.ApiHelper
-import com.example.quizzy.core.apiservices.ApiHelperImpl
 import com.example.quizzy.core.apiservices.ApiService
 import com.example.quizzy.core.utils.Constant.Companion.BaseURL
 import com.example.quizzy.core.utils.Constant.Companion.KEY_USER_PREFERENCES
+import com.example.quizzy.core.utils.MyPreferencesManager
+import com.example.quizzy.features.question.domain.usecase.QuestionsUseCase
+import com.example.quizzy.features.question.presentation.viewmodel.QuestionsViewModel
+import com.example.quizzy.features.settings.domain.usecase.SettingsUseCase
+import com.example.quizzy.features.settings.presentation.viewmodel.SettingViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +33,7 @@ class AppModule {
     }
 
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit{
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BaseURL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -44,9 +47,9 @@ class AppModule {
         return retrofit.create(ApiService::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+//    @Provides
+//    @Singleton
+//    fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
 
     @Provides
     fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager {
@@ -55,7 +58,22 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context):SharedPreferences{
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences(KEY_USER_PREFERENCES, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    fun provideSettingViewModel(
+        settingsUseCase: SettingsUseCase,
+        sharedPreferenceData: MyPreferencesManager
+    ): SettingViewModel {
+        return SettingViewModel(settingsUseCase, sharedPreferenceData)
+    }
+
+    @Provides
+    fun provideQuestionsViewModel(
+        questionsUseCase: QuestionsUseCase
+    ):QuestionsViewModel{
+        return  QuestionsViewModel(questionsUseCase)
     }
 }
