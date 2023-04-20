@@ -1,6 +1,6 @@
 package com.example.quizzy.features.settings.data.repository
 
-import com.example.quizzy.core.apiservices.ApiService
+import com.example.quizzy.core.remote.ApiService
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.settings.data.model.TriviaCategory
 import com.example.quizzy.features.settings.domain.repository.SettingsRepository

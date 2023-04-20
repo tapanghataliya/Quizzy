@@ -30,6 +30,7 @@ class QuestionAdapter(
     private val answerSet = HashSet<String>()
     private var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
+    private var isClickble = false
 
     init {
         quizeViewModel.incorrectAnswerSound.observeForever {
@@ -38,6 +39,13 @@ class QuestionAdapter(
                 mediaPlayer.start()
             }
         }
+
+        quizeViewModel.correctAnswerSound.observeForever({
+            it?.let { correctAnswer->
+                val mediaPlayer = MediaPlayer.create(context, correctAnswer)
+                mediaPlayer.start()
+            }
+        })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerHolder {
@@ -105,6 +113,7 @@ class QuestionAdapter(
             if (quize?.correct_answer == quizAnswer) {
                 textAnswer!!.setBackgroundResource(R.color.green)
                 textAnswer.setTextColor(Color.WHITE)
+                quizeViewModel.onCorrectAnswerSelected()
                 val totalCorrectAns = clickCount++
                 clickInterface?.onClick(
                     totalCorrectAns.toString(),

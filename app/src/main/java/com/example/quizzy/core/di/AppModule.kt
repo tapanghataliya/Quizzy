@@ -3,7 +3,7 @@ package com.example.quizzy.core.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
-import com.example.quizzy.core.apiservices.ApiService
+import com.example.quizzy.core.remote.ApiService
 import com.example.quizzy.core.utils.Constant.Companion.BaseURL
 import com.example.quizzy.core.utils.Constant.Companion.KEY_USER_PREFERENCES
 import com.example.quizzy.core.utils.MyPreferencesManager

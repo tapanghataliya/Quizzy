@@ -1,8 +1,10 @@
 package com.example.quizzy.features.question.data.repository
 
-import com.example.quizzy.core.apiservices.ApiService
+import com.example.quizzy.core.remote.ApiService
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.question.data.model.QuestionList
+import com.example.quizzy.features.question.data.model.toQuestionsListDomain
+import com.example.quizzy.features.question.domain.model.QuestionslistDomain
 import com.example.quizzy.features.question.domain.repository.QuestionsRepository
 
 class QuestionsRepositoryImpl(
@@ -13,20 +15,20 @@ class QuestionsRepositoryImpl(
         catID: String,
         diffType: String,
         queType: String
-    ): Resource<QuestionList> {
-        try {
+    ): Resource<QuestionslistDomain> {
+        return try {
 
             val response = apiService.getQuizList(nQuestion, catID, diffType, queType)
             if (response.isSuccessful) {
-//                val data = response.body()?.results?: emptyList()
-                val data = response.body()
-                return Resource.success(data)
+    //                val data = response.body()?.results?: emptyList()
+                val data = response.body()?.toQuestionsListDomain()
+                Resource.success(data)
             } else {
                 val error = response.errorBody()?.string() ?: "Unknown error"
-                return Resource.error(error, null)
+                Resource.error(error, null)
             }
         }catch (e: Exception){
-            return Resource.error(e.toString(), null)
+            Resource.error(e.toString(), null)
         }
     }
 }

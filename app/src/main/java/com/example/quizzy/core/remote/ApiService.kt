@@ -1,4 +1,4 @@
-package com.example.quizzy.core.apiservices
+package com.example.quizzy.core.remote
 
 import com.example.quizzy.features.settings.data.model.CategoryListResponse
 import com.example.quizzy.features.question.data.model.QuestionList

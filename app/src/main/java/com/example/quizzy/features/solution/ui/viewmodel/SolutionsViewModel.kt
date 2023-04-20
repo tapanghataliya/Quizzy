@@ -7,6 +7,7 @@ import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.question.data.model.QuestionList
+import com.example.quizzy.features.question.domain.model.QuestionslistDomain
 import com.example.quizzy.features.solution.domain.usecase.SolutionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,8 +18,8 @@ class SolutionsViewModel @Inject constructor(
     private val solutionsUseCase: SolutionsUseCase
 ) : BaseViewModel<BaseNavigator>() {
 
-    private val _solutionRes = MutableLiveData<Resource<QuestionList>>()
-    val solutionResponse: LiveData<Resource<QuestionList>> = _solutionRes
+    private val _solutionRes = MutableLiveData<Resource<QuestionslistDomain>>()
+    val solutionResponse: LiveData<Resource<QuestionslistDomain>> = _solutionRes
 
     private val _currentPosition = MutableLiveData<Int>()
     val currentPosition: LiveData<Int>

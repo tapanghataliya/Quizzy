@@ -1,6 +1,7 @@
 package com.example.quizzy.features.question.presentation.viewmodel
 
 import android.content.Context
+import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,7 +10,7 @@ import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.core.utils.VibrationUtils
-import com.example.quizzy.features.question.data.model.QuestionList
+import com.example.quizzy.features.question.domain.model.QuestionslistDomain
 import com.example.quizzy.features.question.domain.usecase.QuestionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,8 +22,8 @@ class QuestionsViewModel @Inject constructor(
     private val questionsUseCase: QuestionsUseCase
 ) : BaseViewModel<BaseNavigator>() {
 
-    private val _questionRes = MutableLiveData<Resource<QuestionList>>()
-    val questionResponse: LiveData<Resource<QuestionList>> = _questionRes
+    private val _questionRes = MutableLiveData<Resource<QuestionslistDomain>>()
+    val questionResponse: LiveData<Resource<QuestionslistDomain>> = _questionRes
 
     private val _currentTime = MutableLiveData<String>()
     val currentTime: LiveData<String>
@@ -38,6 +39,10 @@ class QuestionsViewModel @Inject constructor(
     private val _incorrectAnswerSound = MutableLiveData<Int>()
     val incorrectAnswerSound: LiveData<Int>
         get() = _incorrectAnswerSound
+
+    private val _correctAnswerSound = MutableLiveData<Int>()
+    val correctAnswerSound: LiveData<Int>
+        get() = _correctAnswerSound
 
     //Given list of questions
     fun getQuestionsList(nQuestion: String, catID: String, diffType: String, queType: String) {
@@ -60,6 +65,11 @@ class QuestionsViewModel @Inject constructor(
     //Incorrect answer sound
     fun onIncorrectAnswerSelected() {
         _incorrectAnswerSound.value = R.raw.incorrect_sound
+    }
+
+    //Correct answer sound play
+    fun onCorrectAnswerSelected() {
+        _correctAnswerSound.value = R.raw.currect_sound
     }
 
     //start timer
