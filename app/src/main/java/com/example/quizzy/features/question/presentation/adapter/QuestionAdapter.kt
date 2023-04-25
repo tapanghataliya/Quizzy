@@ -30,7 +30,7 @@ class QuestionAdapter(
     private val answerSet = HashSet<String>()
     private var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
-    private var isClickble = false
+    private var totalCorrectAns = 0
 
     init {
         quizeViewModel.incorrectAnswerSound.observeForever {
@@ -40,12 +40,12 @@ class QuestionAdapter(
             }
         }
 
-        quizeViewModel.correctAnswerSound.observeForever({
-            it?.let { correctAnswer->
+        quizeViewModel.correctAnswerSound.observeForever {
+            it?.let { correctAnswer ->
                 val mediaPlayer = MediaPlayer.create(context, correctAnswer)
                 mediaPlayer.start()
             }
-        })
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerHolder {
@@ -72,6 +72,10 @@ class QuestionAdapter(
 
     private val differ = AsyncListDiffer(this, differCallback)
     fun questionList(list: List<Results>) = differ.submitList(list)
+//    fun questionList(list: List<Results>) {
+//        differ.submitList(list)
+//        notifyDataSetChanged()
+//    }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewPagerHolder, position: Int) {
@@ -114,7 +118,7 @@ class QuestionAdapter(
                 textAnswer!!.setBackgroundResource(R.color.green)
                 textAnswer.setTextColor(Color.WHITE)
                 quizeViewModel.onCorrectAnswerSelected()
-                val totalCorrectAns = clickCount++
+                totalCorrectAns = clickCount++
                 clickInterface?.onClick(
                     totalCorrectAns.toString(),
                     differ.currentList.size,
@@ -125,13 +129,13 @@ class QuestionAdapter(
                 textAnswer.setTextColor(Color.WHITE)
                 quizeViewModel.onIncorrectAnswerSelected()
                 quizeViewModel.onClickVibrat(context)
-                clickInterface?.onClick("0", differ.currentList.size, quize?.category!!)
+                clickInterface?.onClick(totalCorrectAns.toString(), differ.currentList.size, quize?.category!!)
             }
         } else {
             if (quize?.correct_answer == quizAnswer) {
                 textAnswer!!.setBackgroundResource(R.color.green)
                 textAnswer.setTextColor(Color.WHITE)
-                val totalCorrectAns = clickCount++
+                totalCorrectAns = clickCount++
                 clickInterface?.onClick(
                     totalCorrectAns.toString(),
                     differ.currentList.size,
@@ -140,7 +144,7 @@ class QuestionAdapter(
             } else {
                 textAnswer!!.setBackgroundResource(R.color.red)
                 textAnswer.setTextColor(Color.WHITE)
-                clickInterface?.onClick("0", differ.currentList.size, quize?.category!!)
+                clickInterface?.onClick(totalCorrectAns.toString(), differ.currentList.size, quize?.category!!)
             }
         }
     }

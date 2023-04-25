@@ -1,6 +1,8 @@
 package com.example.quizzy.features.question.presentation.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -61,6 +63,7 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
 
         quizQuestionsList()
         buttonClickHandler()
+
     }
 
     //Display Question in view pager
@@ -130,8 +133,18 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
                 totalCorrectAns = text
                 totalQuestions = totalQue
                 category = categorysType
+                moveToNextQuestion()
             }
         })
+    }
+
+    private fun moveToNextQuestion() {
+        viewModel.currentPage.observe(viewLifecycleOwner) { position ->
+            getBindingClass().viewPager.currentItem = position
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewModel.nextPage()
+        }, 1000)
     }
 
     //Handle click for next question display

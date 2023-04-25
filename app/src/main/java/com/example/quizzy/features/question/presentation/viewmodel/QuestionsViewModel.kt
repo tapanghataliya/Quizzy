@@ -8,11 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
+import com.example.quizzy.core.utils.Constant
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.core.utils.VibrationUtils
 import com.example.quizzy.features.question.domain.model.QuestionslistDomain
 import com.example.quizzy.features.question.domain.usecase.QuestionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -99,5 +102,13 @@ class QuestionsViewModel @Inject constructor(
     //vibrate click event
     fun onClickVibrat(context: Context) {
         VibrationUtils.vibrate(context)
+    }
+
+    private val _currentPage = MutableLiveData<Int>()
+    val currentPage: LiveData<Int>
+        get() = _currentPage
+
+    fun nextPage() {
+        _currentPage.value = (_currentPage.value ?: 0) + 1
     }
 }
