@@ -26,7 +26,7 @@ class MyPreferencesManager @Inject constructor(
         val categoryName = sharedPreferences.getString(Constant.CATEGORY_NAME, "") ?: ""
         val difficultysType = sharedPreferences.getString(Constant.DIFFICULTY_TYPE, "") ?: ""
         val questionssType = sharedPreferences.getString(Constant.QUESTIONS_TYPE, "") ?: ""
-        val IsChecked = sharedPreferences.getBoolean(Constant.ISCHECKED, false)
+        val IsChecked = sharedPreferences.getBoolean(Constant.ISCHECKED, true)
 
         return MySettingsData(
             numberQuestions,

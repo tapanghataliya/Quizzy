@@ -1,21 +1,17 @@
 package com.example.quizzy.features.question.presentation.viewmodel
 
 import android.content.Context
-import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.quizzy.R
 import com.example.quizzy.core.base.BaseNavigator
 import com.example.quizzy.core.base.BaseViewModel
-import com.example.quizzy.core.utils.Constant
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.core.utils.VibrationUtils
 import com.example.quizzy.features.question.domain.model.QuestionslistDomain
 import com.example.quizzy.features.question.domain.usecase.QuestionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -46,6 +42,10 @@ class QuestionsViewModel @Inject constructor(
     private val _correctAnswerSound = MutableLiveData<Int>()
     val correctAnswerSound: LiveData<Int>
         get() = _correctAnswerSound
+
+    private val _currentPage = MutableLiveData<Int>()
+    val currentPage: LiveData<Int>
+        get() = _currentPage
 
     //Given list of questions
     fun getQuestionsList(nQuestion: String, catID: String, diffType: String, queType: String) {
@@ -104,11 +104,8 @@ class QuestionsViewModel @Inject constructor(
         VibrationUtils.vibrate(context)
     }
 
-    private val _currentPage = MutableLiveData<Int>()
-    val currentPage: LiveData<Int>
-        get() = _currentPage
-
-    fun nextPage() {
+    //Next question move position wise
+    fun nextQuestion() {
         _currentPage.value = (_currentPage.value ?: 0) + 1
     }
 }

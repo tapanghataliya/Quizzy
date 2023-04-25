@@ -143,7 +143,7 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
             getBindingClass().viewPager.currentItem = position
         }
         Handler(Looper.getMainLooper()).postDelayed({
-            viewModel.nextPage()
+            viewModel.nextQuestion()
         }, 1000)
     }
 
