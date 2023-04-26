@@ -1,9 +1,7 @@
 package com.example.quizzy.features.question.presentation.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
-import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,39 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quizzy.R
 import com.example.quizzy.databinding.ItemsQuizBinding
 import com.example.quizzy.features.question.data.model.Results
-import com.example.quizzy.features.question.presentation.viewmodel.QuestionsViewModel
-import com.example.quizzy.features.settings.presentation.viewmodel.SettingViewModel
 import java.util.*
 
 
 @Suppress("UNREACHABLE_CODE", "DEPRECATION")
-class QuestionAdapter(
-    private val quizeViewModel: QuestionsViewModel,
-    private val context: Context,
-    private val settingsViewModel: SettingViewModel
-) : RecyclerView.Adapter<QuestionAdapter.ViewPagerHolder>(){
+class QuestionAdapter : RecyclerView.Adapter<QuestionAdapter.ViewPagerHolder>(){
 
     private lateinit var subLayout: View
     private val answerSet = HashSet<String>()
     private var clickCount = 1
     private var clickInterface: OnItemClickListener? = null
     private var totalCorrectAns = 0
-
-    init {
-        quizeViewModel.incorrectAnswerSound.observeForever {
-            it?.let { sound ->
-                val mediaPlayer = MediaPlayer.create(context, sound)
-                mediaPlayer.start()
-            }
-        }
-
-        quizeViewModel.correctAnswerSound.observeForever {
-            it?.let { correctAnswer ->
-                val mediaPlayer = MediaPlayer.create(context, correctAnswer)
-                mediaPlayer.start()
-            }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerHolder {
         val binding = ItemsQuizBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -101,6 +77,7 @@ class QuestionAdapter(
             holder.view.lylCustomTextview.addView(subLayout)
             val quizAnswer = textAnswer.text.toString()
             textAnswer.setOnClickListener {
+                clickInterface?.onAnswerClick(quizAnswer, quize)
                 getAnswerAction(quizAnswer, textAnswer, quize)
             }
         }
@@ -113,25 +90,6 @@ class QuestionAdapter(
         textAnswer: TextView?,
         quize: Results?
     ) {
-        if (settingsViewModel.getsaveSettingData().isCheck) {
-            if (quize?.correct_answer == quizAnswer) {
-                textAnswer!!.setBackgroundResource(R.color.green)
-                textAnswer.setTextColor(Color.WHITE)
-                quizeViewModel.onCorrectAnswerSelected()
-                totalCorrectAns = clickCount++
-                clickInterface?.onClick(
-                    totalCorrectAns.toString(),
-                    differ.currentList.size,
-                    quize.category!!
-                )
-            } else {
-                textAnswer!!.setBackgroundResource(R.color.red)
-                textAnswer.setTextColor(Color.WHITE)
-                quizeViewModel.onIncorrectAnswerSelected()
-                quizeViewModel.onClickVibrat(context)
-                clickInterface?.onClick(totalCorrectAns.toString(), differ.currentList.size, quize?.category!!)
-            }
-        } else {
             if (quize?.correct_answer == quizAnswer) {
                 textAnswer!!.setBackgroundResource(R.color.green)
                 textAnswer.setTextColor(Color.WHITE)
@@ -146,7 +104,6 @@ class QuestionAdapter(
                 textAnswer.setTextColor(Color.WHITE)
                 clickInterface?.onClick(totalCorrectAns.toString(), differ.currentList.size, quize?.category!!)
             }
-        }
     }
 
     fun setItemClick(clickInterface: OnItemClickListener) {
@@ -162,6 +119,7 @@ class QuestionAdapter(
 
     interface OnItemClickListener {
         fun onClick(text: String, totalQue: Int, category: String)
+        fun onAnswerClick(quizAnswer: String,quize: Results?)
     }
 
 }

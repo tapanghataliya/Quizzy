@@ -72,8 +72,9 @@ class AppModule {
 
     @Provides
     fun provideQuestionsViewModel(
-        questionsUseCase: QuestionsUseCase
+        questionsUseCase: QuestionsUseCase,
+        context: Context
     ):QuestionsViewModel{
-        return  QuestionsViewModel(questionsUseCase)
+        return  QuestionsViewModel(questionsUseCase, context)
     }
 }

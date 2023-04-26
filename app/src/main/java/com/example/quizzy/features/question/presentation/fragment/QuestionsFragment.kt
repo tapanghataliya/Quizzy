@@ -15,6 +15,7 @@ import com.example.quizzy.core.utils.Status
 import com.example.quizzy.core.utils.ViewExt.Companion.showDialog
 import com.example.quizzy.core.utils.ViewExt.Companion.showSnackBar
 import com.example.quizzy.databinding.FragmentQuizeBinding
+import com.example.quizzy.features.question.data.model.Results
 import com.example.quizzy.features.question.presentation.adapter.QuestionAdapter
 import com.example.quizzy.features.question.presentation.viewmodel.QuestionsViewModel
 import com.example.quizzy.features.settings.presentation.viewmodel.SettingViewModel
@@ -68,7 +69,8 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
 
     //Display Question in view pager
     private fun quizQuestionsList() {
-        questionAdapter = QuestionAdapter(viewModel, requireContext(), settingsViewModel)
+//        questionAdapter = QuestionAdapter(viewModel, requireContext(), settingsViewModel.getsaveSettingData().isCheck)
+        questionAdapter = QuestionAdapter()
         getBindingClass().viewPager.adapter = questionAdapter
         getBindingClass().viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
@@ -133,7 +135,22 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
                 totalCorrectAns = text
                 totalQuestions = totalQue
                 category = categorysType
-                moveToNextQuestion()
+            }
+
+            override fun onAnswerClick(quizAnswer: String, quize: Results?) {
+                if (settingsViewModel.getsaveSettingData().isCheck){
+                    if (quize?.correct_answer == quizAnswer){
+                        view?.showSnackBar(quizAnswer)
+                        viewModel.correctSoundPlayback()
+
+                    }else{
+                        viewModel.wrongSoundPlayback()
+                        context?.let { viewModel.onClickVibrat(it) }
+                    }
+                    moveToNextQuestion()
+                }else{
+                    moveToNextQuestion()
+                }
             }
         })
     }

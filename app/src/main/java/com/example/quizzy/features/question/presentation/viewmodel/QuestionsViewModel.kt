@@ -1,6 +1,7 @@
 package com.example.quizzy.features.question.presentation.viewmodel
 
 import android.content.Context
+import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,14 +12,17 @@ import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.core.utils.VibrationUtils
 import com.example.quizzy.features.question.domain.model.QuestionslistDomain
 import com.example.quizzy.features.question.domain.usecase.QuestionsUseCase
+import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class QuestionsViewModel @Inject constructor(
-    private val questionsUseCase: QuestionsUseCase
+    private val questionsUseCase: QuestionsUseCase,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel<BaseNavigator>() {
 
     private val _questionRes = MutableLiveData<Resource<QuestionslistDomain>>()
@@ -35,17 +39,12 @@ class QuestionsViewModel @Inject constructor(
     val currentPosition: LiveData<Int>
         get() = _currentPosition
 
-    private val _incorrectAnswerSound = MutableLiveData<Int>()
-    val incorrectAnswerSound: LiveData<Int>
-        get() = _incorrectAnswerSound
-
-    private val _correctAnswerSound = MutableLiveData<Int>()
-    val correctAnswerSound: LiveData<Int>
-        get() = _correctAnswerSound
-
     private val _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int>
         get() = _currentPage
+
+    private var mediaPlayer: MediaPlayer? = null
+    private var mediaPlayer2: MediaPlayer? = null
 
     //Given list of questions
     fun getQuestionsList(nQuestion: String, catID: String, diffType: String, queType: String) {
@@ -63,16 +62,6 @@ class QuestionsViewModel @Inject constructor(
     // Increment the position by 1 and update the LiveData
     fun onButtonClicked() {
         _currentPosition.value = (_currentPosition.value ?: 0) + 1
-    }
-
-    //Incorrect answer sound
-    fun onIncorrectAnswerSelected() {
-        _incorrectAnswerSound.value = R.raw.incorrect_sound
-    }
-
-    //Correct answer sound play
-    fun onCorrectAnswerSelected() {
-        _correctAnswerSound.value = R.raw.currect_sound
     }
 
     //start timer
@@ -108,4 +97,19 @@ class QuestionsViewModel @Inject constructor(
     fun nextQuestion() {
         _currentPage.value = (_currentPage.value ?: 0) + 1
     }
+
+    fun correctSoundPlayback() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(context, R.raw.currect_sound)
+        }
+        mediaPlayer?.start()
+    }
+
+    fun wrongSoundPlayback() {
+        if (mediaPlayer2 == null) {
+            mediaPlayer2 = MediaPlayer.create(context, R.raw.incorrect_sound)
+        }
+        mediaPlayer2?.start()
+    }
+
 }
