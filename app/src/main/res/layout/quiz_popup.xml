@@ -26,7 +26,8 @@
                     android:layout_marginTop="@dimen/dimen_30dp"
                     android:text=""
                     android:textColor="@color/dark_yellow"
-                    android:textSize="@dimen/dimen_24sp" />
+                    android:textSize="@dimen/dimen_24sp"
+                    android:fontFamily="@font/montserrat_regular"/>
 
                 <ImageView
                     android:layout_width="@dimen/dimen_250sp"
@@ -64,7 +65,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/QuizName"
                             android:textSize="@dimen/dimen_20sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -80,7 +81,8 @@
                             android:singleLine="true"
                             android:text=""
                             android:textColor="@color/dark_yellow"
-                            android:textSize="@dimen/dimen_20sp" />
+                            android:textSize="@dimen/dimen_20sp"
+                            android:fontFamily="@font/montserrat_regular"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -106,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/DifficultyType"
                             android:textSize="@dimen/dimen_20sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -121,7 +123,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/DifficultyTypes"
                             android:textColor="@color/dark_yellow"
-                            android:textSize="@dimen/dimen_20sp" />
+                            android:textSize="@dimen/dimen_20sp"
+                            android:fontFamily="@font/montserrat_regular"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -147,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/Time"
                             android:textSize="@dimen/dimen_20sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -162,7 +165,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/displayTime"
                             android:textColor="@color/dark_yellow"
-                            android:textSize="@dimen/dimen_20sp" />
+                            android:textSize="@dimen/dimen_20sp"
+                            android:fontFamily="@font/montserrat_regular"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -188,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/TimeTaken"
                             android:textSize="@dimen/dimen_20sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -203,7 +207,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/displayTime"
                             android:textColor="@color/dark_yellow"
-                            android:textSize="@dimen/dimen_20sp" />
+                            android:textSize="@dimen/dimen_20sp"
+                            android:fontFamily="@font/montserrat_regular"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -228,7 +233,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/Scored"
                             android:textSize="@dimen/dimen_20sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -243,7 +248,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/totalQue"
                             android:textColor="@color/dark_yellow"
-                            android:textSize="@dimen/dimen_20sp" />
+                            android:textSize="@dimen/dimen_20sp"
+                            android:fontFamily="@font/montserrat_regular"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -268,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/TotalQue"
                             android:textSize="@dimen/dimen_20sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -283,7 +289,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/totalQue"
                             android:textColor="@color/dark_yellow"
-                            android:textSize="@dimen/dimen_20sp" />
+                            android:textSize="@dimen/dimen_20sp"
+                            android:fontFamily="@font/montserrat_regular"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -305,7 +312,7 @@
                     android:text="@string/start_quiz"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_20sp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/montserrat_bold" />
             </LinearLayout>
 
         </LinearLayout>

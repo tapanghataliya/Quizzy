@@ -34,7 +34,7 @@
                         android:text="@string/Number_Questions"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_16sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/montserrat_bold" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                         android:text="@string/Select_Category"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_16sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/montserrat_bold" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                         android:text="@string/Select_Difficulty"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_16sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/montserrat_bold" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                         android:text="@string/Select_Type"
                         android:textColor="@color/dark_yellow"
                         android:textSize="@dimen/dimen_16sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/montserrat_bold" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                             android:text="@string/Sound"
                             android:textColor="@color/dark_yellow"
                             android:textSize="@dimen/dimen_16sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold" />
 
 
                         <androidx.appcompat.widget.SwitchCompat
@@ -160,7 +160,7 @@
                             android:text="@string/Vibration"
                             android:textColor="@color/dark_yellow"
                             android:textSize="@dimen/dimen_16sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_bold" />
 
 
                         <androidx.appcompat.widget.SwitchCompat
@@ -182,7 +182,7 @@
                         android:text="@string/submit"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dimen_20sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/montserrat_bold"/>
                 </LinearLayout>
 
                 <ProgressBar
