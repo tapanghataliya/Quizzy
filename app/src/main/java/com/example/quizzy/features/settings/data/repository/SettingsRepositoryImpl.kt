@@ -1,14 +1,17 @@
 package com.example.quizzy.features.settings.data.repository
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.quizzy.core.remote.ApiService
 import com.example.quizzy.core.utils.Resource
 import com.example.quizzy.features.settings.data.model.TriviaCategory
 import com.example.quizzy.features.settings.domain.repository.SettingsRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 class SettingsRepositoryImpl(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    @ApplicationContext private val context: Context
 ) : SettingsRepository {
     @RequiresApi(Build.VERSION_CODES.M)
     override suspend fun getCategory(): Resource<List<TriviaCategory>> {
