@@ -1,5 +1,7 @@
 package com.example.quizzy.core.di
 
+import android.app.Application
+import android.content.Context
 import com.example.quizzy.core.remote.ApiService
 import com.example.quizzy.features.question.data.repository.QuestionsRepositoryImpl
 import com.example.quizzy.features.question.domain.repository.QuestionsRepository
@@ -11,14 +13,21 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class RepoitoryModule {
 
     @Provides
-    fun provideSettingRepository(apiService: ApiService): SettingsRepository {
-        return SettingsRepositoryImpl(apiService)
+    @Singleton
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
+    }
+
+    @Provides
+    fun provideSettingRepository(apiService: ApiService,context: Context): SettingsRepository {
+        return SettingsRepositoryImpl(apiService, context)
     }
 
     @Provides
