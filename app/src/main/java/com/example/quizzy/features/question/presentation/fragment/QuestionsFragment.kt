@@ -140,9 +140,7 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
             override fun onAnswerClick(quizAnswer: String, quize: Results?) {
                 if (settingsViewModel.getsaveSettingData().isCheck){
                     if (quize?.correct_answer == quizAnswer){
-                        view?.showSnackBar(quizAnswer)
                         viewModel.correctSoundPlayback()
-
                     }else{
                         viewModel.wrongSoundPlayback()
                         context?.let { viewModel.onClickVibrat(it) }
