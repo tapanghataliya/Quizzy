@@ -69,7 +69,6 @@ class QuestionsFragment : BaseFragment<FragmentQuizeBinding, QuestionsViewModel>
 
     //Display Question in view pager
     private fun quizQuestionsList() {
-//        questionAdapter = QuestionAdapter(viewModel, requireContext(), settingsViewModel.getsaveSettingData().isCheck)
         questionAdapter = QuestionAdapter()
         getBindingClass().viewPager.adapter = questionAdapter
         getBindingClass().viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
